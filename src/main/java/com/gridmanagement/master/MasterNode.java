@@ -15,6 +15,10 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.ReentrantLock;
+import java.io.FileWriter;
+import java.io.File;
+import com.gridmanagement.grid.CandidateEvaluator;
+import com.gridmanagement.model.RouteCandidate;
 
 /**
  * Master node — coordinates the distributed power-flow optimisation.
@@ -58,19 +62,23 @@ public class MasterNode {
     // ── Grid ──────────────────────────────────────────────────────────────
     private GridSnapshot grid;
 
-    // ── Task queue ────────────────────────────────────────────────────────
-    /** Each element is {chunkId, rangeStart, rangeEnd}. */
-    private final ConcurrentLinkedQueue<int[]> taskQueue = new ConcurrentLinkedQueue<>();
+    // ── Task Queue (Adaptive Granularity) ─────────────────────────────────
+    private final AtomicInteger currentTaskStart = new AtomicInteger(0);
+    private final AtomicInteger nextChunkId = new AtomicInteger(0);
 
     // ── Result aggregation ────────────────────────────────────────────────
-    private final AtomicInteger chunksCompleted = new AtomicInteger(0);
+    private final AtomicInteger candidatesCompleted = new AtomicInteger(0);
     private final AtomicReference<RouteResult> globalBest =
             new AtomicReference<>(RouteResult.WORST);
     private final ReentrantLock resultsLock = new ReentrantLock();
     private final List<RouteResult> allResults = new ArrayList<>();
 
     // ── Synchronisation ───────────────────────────────────────────────────
-    private final CountDownLatch doneLatch;
+    private final CountDownLatch doneLatch = new CountDownLatch(1);
+
+    // ── Sequential Baseline ───────────────────────────────────────────────
+    private RouteResult seqBest = RouteResult.WORST;
+    private long seqTimeMs = 0;
 
     // ── Timing ────────────────────────────────────────────────────────────
     private long evalStartTime;
@@ -86,7 +94,6 @@ public class MasterNode {
         this.totalCandidates  = totalCandidates;
         this.chunkSize        = chunkSize;
         this.totalChunks      = (int) Math.ceil((double) totalCandidates / chunkSize);
-        this.doneLatch        = new CountDownLatch(totalChunks);
     }
 
     // ── Public entry ──────────────────────────────────────────────────────
@@ -104,13 +111,11 @@ public class MasterNode {
         System.out.printf("[MASTER] Grid built in %d ms%n",
                 System.currentTimeMillis() - t0);
 
-        // ── Step 2: Populate task queue ───────────────────────────────────
-        int chunkId = 0;
-        for (int start = 0; start < totalCandidates; start += chunkSize) {
-            int end = Math.min(start + chunkSize, totalCandidates);
-            taskQueue.add(new int[]{chunkId++, start, end});
-        }
-        System.out.printf("[MASTER] Task queue ready: %d chunks%n", totalChunks);
+        // ── Step 1.5: Sequential Baseline ─────────────────────────────────
+        runSequentialBaseline();
+
+        // ── Step 2: Task preparation ──────────────────────────────────────
+        System.out.printf("[MASTER] Using Adaptive Task Granularity (Initial target chunks: %d)%n", totalChunks);
 
         // ── Step 3: Accept workers ────────────────────────────────────────
         System.out.printf("[MASTER] Waiting for %d worker(s) on port %d...%n",
@@ -144,7 +149,7 @@ public class MasterNode {
 
         long totalTime = System.currentTimeMillis() - evalStartTime;
 
-        // ── Step 6: Print global result ───────────────────────────────────
+        // ── Step 6: Print global result & CSV ─────────────────────────────
         RouteResult best = globalBest.get();
         printResult(best, totalTime);
 
@@ -156,6 +161,21 @@ public class MasterNode {
         System.out.println("[MASTER] Done.");
     }
 
+    private void runSequentialBaseline() {
+        System.out.println("[MASTER] Running Sequential Baseline...");
+        long t0 = System.currentTimeMillis();
+        for (int id = 0; id < totalCandidates; id++) {
+            RouteCandidate candidate = GridGenerator.generateCandidate(grid, id);
+            RouteResult r = CandidateEvaluator.evaluate(grid, candidate, 0);
+            if (r.costScore < seqBest.costScore) {
+                seqBest = r;
+            }
+        }
+        seqTimeMs = System.currentTimeMillis() - t0;
+        System.out.printf("[MASTER] Sequential Baseline Complete in %d ms%n", seqTimeMs);
+        System.out.printf("[MASTER] Sequential Best Cost: %.2f (Candidate #%d)%n", seqBest.costScore, seqBest.candidateId);
+    }
+
     // ── Callbacks invoked by WorkerProxy threads ──────────────────────────
 
     /**
@@ -164,19 +184,29 @@ public class MasterNode {
      * Dequeues one chunk and sends {@code TASK_ASSIGN}; does nothing if the
      * queue is empty (worker will wait for {@code SHUTDOWN}).
      */
-    public void dispatchNextChunk(WorkerProxy proxy) {
-        int[] chunk = taskQueue.poll();
-        if (chunk != null) {
-            proxy.send(Message.taskAssign(chunk[0], chunk[1], chunk[2]));
-        }
-        // Queue exhausted → proxy waits for SHUTDOWN
+    public int dispatchNextChunk(WorkerProxy proxy) {
+        int remaining = totalCandidates - currentTaskStart.get();
+        if (remaining <= 0) return 0; // queue exhausted
+
+        // Adaptive Task Granularity: larger chunks initially, smaller towards the end
+        int dynamicChunkSize = Math.max(10, remaining / (expectedWorkers * 2));
+        dynamicChunkSize = Math.min(dynamicChunkSize, chunkSize); // cap at configured chunk size
+        
+        int start = currentTaskStart.getAndAdd(dynamicChunkSize);
+        if (start >= totalCandidates) return 0;
+        
+        int end = Math.min(start + dynamicChunkSize, totalCandidates);
+        int cid = nextChunkId.getAndIncrement();
+        
+        proxy.send(Message.taskAssign(cid, start, end));
+        return end - start;
     }
 
     /**
      * Called by a {@link WorkerProxy} when it receives a {@code RESULT_RETURN}.
      * Updates the global best via a CAS loop; counts down the completion latch.
      */
-    public void acceptResult(RouteResult result) {
+    public void acceptResult(RouteResult result, int chunkCandidateCount) {
         // CAS loop: update globalBest only when result is strictly better
         RouteResult cur;
         do {
@@ -188,15 +218,17 @@ public class MasterNode {
         try { allResults.add(result); }
         finally { resultsLock.unlock(); }
 
-        int done = chunksCompleted.incrementAndGet();
-        doneLatch.countDown();
+        int done = candidatesCompleted.addAndGet(chunkCandidateCount);
+        if (done >= totalCandidates) {
+            doneLatch.countDown();
+        }
 
-        // Progress logging every 5 % or on the last chunk
-        if (done == totalChunks || done % Math.max(1, totalChunks / 20) == 0) {
-            System.out.printf("[MASTER] Progress: %4d / %d  (%.0f%%)  " +
+        // Progress logging
+        if (done == totalCandidates || done % Math.max(1, totalCandidates / 10) < chunkCandidateCount) {
+            System.out.printf("[MASTER] Progress: %d / %d  (%.0f%%)  " +
                               "best cost so far: %.2f%n",
-                    done, totalChunks,
-                    100.0 * done / totalChunks,
+                    done, totalCandidates,
+                    100.0 * done / totalCandidates,
                     globalBest.get().costScore);
         }
     }
@@ -210,11 +242,19 @@ public class MasterNode {
     // ── Private helpers ───────────────────────────────────────────────────
 
     private void printResult(RouteResult best, long totalMs) {
+        double speedup = (double) seqTimeMs / totalMs;
+        double efficiency = speedup / expectedWorkers;
+        double f = (expectedWorkers / speedup - 1) / (expectedWorkers - 1);
+        double amdahlMax = 1.0 / ((1 - f) + (f / expectedWorkers));
+        boolean correctness = (Math.abs(best.costScore - seqBest.costScore) < 1e-6);
+
         int w = 62;
         String line = "═".repeat(w);
         System.out.println("\n╔" + line + "╗");
         System.out.printf( "║  %-" + (w - 2) + "s║%n", "EVALUATION COMPLETE");
         System.out.println("╠" + line + "╣");
+        System.out.printf( "║  Correctness Match %-5b                                 ║%n",
+                correctness);
         System.out.printf( "║  Global Optimum  Candidate #%-6d                       ║%n",
                 best.candidateId);
         System.out.printf( "║  Cost Score      %-12.2f                           ║%n",
@@ -223,13 +263,32 @@ public class MasterNode {
                 best.feasible);
         System.out.printf( "║  Found by Worker %-3d                                   ║%n",
                 best.workerId);
-        System.out.printf( "║  Total Time      %d ms                                  ║%n",
+        System.out.printf( "║  Total Time(Par) %d ms                                  ║%n",
                 totalMs);
+        System.out.printf( "║  Total Time(Seq) %d ms                                  ║%n",
+                seqTimeMs);
         System.out.printf( "║  Workers         %-3d                                   ║%n",
                 expectedWorkers);
-        System.out.printf( "║  Chunks Done     %d / %d                               ║%n",
-                chunksCompleted.get(), totalChunks);
+        System.out.printf( "║  Speedup         %-12.2f                           ║%n",
+                speedup);
+        System.out.printf( "║  Efficiency      %-12.2f                           ║%n",
+                efficiency);
+        System.out.printf( "║  Parallel Frac f %-12.2f                           ║%n",
+                f);
+        System.out.printf( "║  Amdahl Max S    %-12.2f                           ║%n",
+                amdahlMax);
         System.out.println("╚" + line + "╝\n");
+
+        try (FileWriter fw = new FileWriter("results.csv", true)) {
+            File fcsv = new File("results.csv");
+            if (fcsv.length() == 0) {
+                fw.write("Workers,Candidates,T_seq(ms),T_par(ms),Speedup,Efficiency,ParallelFraction,Correctness\n");
+            }
+            fw.write(String.format("%d,%d,%d,%d,%.2f,%.2f,%.2f,%b\n",
+                    expectedWorkers, totalCandidates, seqTimeMs, totalMs, speedup, efficiency, f, correctness));
+        } catch (IOException e) {
+            System.err.println("Failed to write results.csv: " + e.getMessage());
+        }
     }
 
     private static void banner() {

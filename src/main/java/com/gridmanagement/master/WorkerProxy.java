@@ -32,6 +32,7 @@ public class WorkerProxy implements Runnable {
 
     /** Set when the first HANDSHAKE from this worker is received. */
     private volatile int workerId = -1;
+    private int currentChunkSize = 0;
 
     public WorkerProxy(Socket socket, MasterNode master) throws IOException {
         this.socket = socket;
@@ -74,14 +75,14 @@ public class WorkerProxy implements Runnable {
 
             case Message.TASK_REQUEST -> {
                 // Worker explicitly requests its first chunk
-                master.dispatchNextChunk(this);
+                currentChunkSize = master.dispatchNextChunk(this);
             }
 
             case Message.RESULT_RETURN -> {
                 // Store result, then immediately push next chunk (dynamic assignment)
                 RouteResult result = RouteResult.deserialize(msg.payload);
-                master.acceptResult(result);
-                master.dispatchNextChunk(this);   // sends TASK_ASSIGN or nothing
+                master.acceptResult(result, currentChunkSize);
+                currentChunkSize = master.dispatchNextChunk(this);   // sends TASK_ASSIGN or nothing
             }
 
             case Message.STATUS_UPDATE -> {
