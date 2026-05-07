@@ -57,11 +57,14 @@ for r in rows:
 os.makedirs(ROOT, exist_ok=True)
 
 # --- Strong Scaling: Speedup & Efficiency vs Worker Count (per candidate size) ---
+strong_scaling_curves = []
 for c, items in sorted(by_size.items()):
     items_sorted = sorted(items, key=lambda x: x['w'])
     ws = [x['w'] for x in items_sorted]
     Ss = [x['s'] for x in items_sorted]
     Es = [x['e'] for x in items_sorted]
+
+    strong_scaling_curves.append((c, ws, Ss))
 
     # Plot Speedup
     plt.figure(figsize=(8, 5))
@@ -113,11 +116,30 @@ for c, items in sorted(by_size.items()):
             else:
                 fo.write(f"{x['w']},{x['s']:.4f},{x['e']:.4f},{fv:.4f}\n")
 
+if strong_scaling_curves:
+    plt.figure(figsize=(9, 5))
+    for c, ws, Ss in strong_scaling_curves:
+        plt.plot(ws, Ss, marker='o', linewidth=2, markersize=7, label=f'Candidates={c}')
+
+    plt.axhline(y=1.0, color='gray', linestyle=':', linewidth=1, label='S=1 baseline')
+    plt.title('Strong Scaling: Speedup Comparison', fontsize=12, fontweight='bold')
+    plt.xlabel('Workers (p)', fontsize=11)
+    plt.ylabel('Speedup S(p) = T_seq / T_par', fontsize=11)
+    plt.grid(True, alpha=0.3)
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(os.path.join(ROOT, 'strong_scaling_overview.png'), dpi=150)
+    plt.close()
+
 if weak_rows:
     weak_rows = sorted(weak_rows, key=lambda x: x['w'])
     ws = [x['w'] for x in weak_rows]
     tpars = [x['t_par'] for x in weak_rows]
     norm = [t / tpars[0] for t in tpars] if tpars else []
+
+    if tpars and max(tpars) > 1.1 * min(tpars):
+        print('Weak-scaling warning: parallel runtime increases noticeably with workers.')
+        print('  Ideal weak scaling should stay approximately flat as workers and problem size grow together.')
 
     plt.figure(figsize=(8, 5))
     plt.plot(ws, tpars, marker='o', linewidth=2, markersize=8, label='Measured T_par')
@@ -186,6 +208,7 @@ for c, items in sorted(by_size.items()):
 print('All plots and summaries written to repository root.')
 print('Generated:')
 print('  - speedup_*.png, efficiency_*.png (strong scaling)')
+print('  - strong_scaling_overview.png (combined strong scaling, if multiple points exist)')
 print('  - weak_scaling.png, weak_scaling_normalized.png (weak scaling, if weak_results.csv exists)')
 print('  - amdahl_*.png (Amdahl\'s Law comparison)')
 print('  - summary_*.txt (detailed metrics)')
