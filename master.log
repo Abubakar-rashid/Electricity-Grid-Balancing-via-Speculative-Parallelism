@@ -2,90 +2,56 @@
 ?     PDC Grid Management  ?  MASTER NODE                     ?
 ?     Parallel Distributed Power-Flow Optimiser                ?
 ????????????????????????????????????????????????????????????????
-[MASTER] Config: 500 nodes  1000 edges  200000 candidates  2000 chunks of 100  port=9090
+[MASTER] Config: 500 nodes  1000 edges  100000 candidates  1000 chunks of 100  port=9090
 [MASTER] Building grid...
-[MASTER] Grid built in 2 ms
-[MASTER] Opening server socket on port 9090 — waiting for 6 worker(s)...
-[MASTER] Worker connection 1/6 accepted from 127.0.0.1
-[MASTER] Worker-1 registered  (18 cores)
-[MASTER] Worker connection 2/6 accepted from 127.0.0.1
-[MASTER] Worker-2 registered  (18 cores)
-[MASTER] Worker connection 3/6 accepted from 127.0.0.1
-[MASTER] Worker-3 registered  (18 cores)
-[MASTER] Worker connection 4/6 accepted from 127.0.0.1
-[MASTER] Worker-4 registered  (18 cores)
-[MASTER] Worker connection 5/6 accepted from 127.0.0.1
+[MASTER] Grid built in 3 ms
+[MASTER] Opening server socket on port 9090 — waiting for 4 worker(s)...
+[MASTER] Worker connection 1/4 accepted from 127.0.0.1
+[MASTER] Worker-1 registered  (4 cores)
+[MASTER] Worker connection 2/4 accepted from 127.0.0.1
+[MASTER] Worker-2 registered  (4 cores)
+[MASTER] Worker connection 3/4 accepted from 127.0.0.1
+[MASTER] Worker-3 registered  (4 cores)
+[MASTER] Worker connection 4/4 accepted from 127.0.0.1
+[MASTER] Using Adaptive Task Granularity (Initial target chunks: 1000)
+[MASTER] Running Sequential Baseline (100000 candidates)...
+[MASTER] Worker-4 registered  (4 cores)
+[MASTER] Sequential baseline: 10000 / 100000 (10%)
+[MASTER] Sequential baseline: 20000 / 100000 (20%)
+[MASTER] Sequential baseline: 30000 / 100000 (30%)
 [STATUS] Worker-1   progress=0.0%  cpu=50.0%
-[MASTER] Worker-5 registered  (18 cores)
-[MASTER] Worker connection 6/6 accepted from 127.0.0.1
-[MASTER] Using Fixed Task Granularity (Chunk size: 100)
-[MASTER] Running Sequential Baseline (200000 candidates)...
-[MASTER] Worker-6 registered  (18 cores)
+[MASTER] Sequential baseline: 40000 / 100000 (40%)
 [STATUS] Worker-2   progress=0.0%  cpu=50.0%
-[MASTER] Sequential baseline: 20000 / 200000 (10%)
+[MASTER] Sequential baseline: 50000 / 100000 (50%)
 [STATUS] Worker-3   progress=0.0%  cpu=50.0%
 [STATUS] Worker-4   progress=0.0%  cpu=50.0%
-[MASTER] Sequential baseline: 40000 / 200000 (20%)
-[STATUS] Worker-5   progress=0.0%  cpu=50.0%
+[MASTER] Sequential baseline: 60000 / 100000 (60%)
+[MASTER] Sequential baseline: 70000 / 100000 (70%)
+[MASTER] Sequential baseline: 80000 / 100000 (80%)
 [STATUS] Worker-1   progress=0.0%  cpu=50.0%
-[STATUS] Worker-6   progress=0.0%  cpu=50.0%
-[MASTER] Sequential baseline: 60000 / 200000 (30%)
+[MASTER] Sequential baseline: 90000 / 100000 (90%)
 [STATUS] Worker-2   progress=0.0%  cpu=50.0%
-[STATUS] Worker-3   progress=0.0%  cpu=50.0%
-[MASTER] Sequential baseline: 80000 / 200000 (40%)
-[STATUS] Worker-4   progress=0.0%  cpu=50.0%
-[MASTER] Sequential baseline: 100000 / 200000 (50%)
-[MASTER] Sequential baseline: 120000 / 200000 (60%)
-[STATUS] Worker-5   progress=0.0%  cpu=50.0%
-[STATUS] Worker-1   progress=0.0%  cpu=50.0%
-[STATUS] Worker-6   progress=0.0%  cpu=50.0%
-[STATUS] Worker-2   progress=0.0%  cpu=50.0%
-[MASTER] Sequential baseline: 140000 / 200000 (70%)
-[STATUS] Worker-3   progress=0.0%  cpu=50.0%
-[STATUS] Worker-4   progress=0.0%  cpu=50.0%
-[MASTER] Sequential baseline: 160000 / 200000 (80%)
-[STATUS] Worker-5   progress=0.0%  cpu=50.0%
-[MASTER] Sequential baseline: 180000 / 200000 (90%)
-[STATUS] Worker-1   progress=0.0%  cpu=50.0%
-[STATUS] Worker-6   progress=0.0%  cpu=50.0%
-[STATUS] Worker-2   progress=0.0%  cpu=50.0%
-[MASTER] Sequential baseline: 200000 / 200000 (100%)
-[MASTER] Sequential Baseline complete in 6518 ms
+[MASTER] Sequential baseline: 100000 / 100000 (100%)
+[MASTER] Sequential Baseline complete in 3467 ms
 [MASTER] Sequential Best Cost: 35569990.9532 (Candidate #54422)
 [MASTER] Broadcasting GRID_INIT to all workers...
-[STATUS] Worker-3   progress=0.0%  cpu=50.0%
 [MASTER] Evaluation running — waiting for results...
-[STATUS] Worker-4   progress=0.0%  cpu=50.0%
-[STATUS] Worker-5   progress=50.0%  cpu=50.0%
-[STATUS] Worker-1   progress=92.3%  cpu=50.0%
-[STATUS] Worker-6   progress=66.7%  cpu=50.0%
-[STATUS] Worker-2   progress=95.7%  cpu=50.0%
-[STATUS] Worker-3   progress=95.5%  cpu=50.0%
-[MASTER] Progress: 20000 / 200000  (10%)  best cost so far: 35729609.27
+[STATUS] Worker-3   progress=75.0%  cpu=50.0%
 [STATUS] Worker-4   progress=100.0%  cpu=50.0%
-[MASTER] Progress: 40000 / 200000  (20%)  best cost so far: 35729609.27
-[STATUS] Worker-5   progress=98.9%  cpu=50.0%
-[STATUS] Worker-1   progress=99.1%  cpu=50.0%
-[STATUS] Worker-6   progress=98.8%  cpu=50.0%
-[STATUS] Worker-2   progress=99.1%  cpu=50.0%
-[MASTER] Progress: 60000 / 200000  (30%)  best cost so far: 35569990.95
-[STATUS] Worker-3   progress=99.2%  cpu=50.0%
-[MASTER] Progress: 80000 / 200000  (40%)  best cost so far: 35569990.95
-[STATUS] Worker-4   progress=99.1%  cpu=50.0%
-[MASTER] Progress: 100000 / 200000  (50%)  best cost so far: 35569990.95
-[MASTER] Progress: 120000 / 200000  (60%)  best cost so far: 35569990.95
-[STATUS] Worker-5   progress=99.6%  cpu=50.0%
+[MASTER] Progress: 10000 / 100000  (10%)  best cost so far: 35729609.27
+[MASTER] Progress: 20000 / 100000  (20%)  best cost so far: 35729609.27
+[MASTER] Progress: 30000 / 100000  (30%)  best cost so far: 35729609.27
+[MASTER] Progress: 40000 / 100000  (40%)  best cost so far: 35729609.27
 [STATUS] Worker-1   progress=100.0%  cpu=50.0%
-[STATUS] Worker-6   progress=99.5%  cpu=50.0%
-[STATUS] Worker-2   progress=99.6%  cpu=50.0%
-[MASTER] Progress: 140000 / 200000  (70%)  best cost so far: 35569990.95
+[MASTER] Progress: 50000 / 100000  (50%)  best cost so far: 35729609.27
+[STATUS] Worker-2   progress=100.0%  cpu=50.0%
+[MASTER] Progress: 60000 / 100000  (60%)  best cost so far: 35569990.95
+[MASTER] Progress: 70000 / 100000  (70%)  best cost so far: 35569990.95
 [STATUS] Worker-3   progress=99.6%  cpu=50.0%
-[STATUS] Worker-4   progress=100.0%  cpu=50.0%
-[MASTER] Progress: 160000 / 200000  (80%)  best cost so far: 35569990.95
-[MASTER] Progress: 180000 / 200000  (90%)  best cost so far: 35569990.95
-[STATUS] Worker-5   progress=99.7%  cpu=50.0%
-[MASTER] Progress: 200000 / 200000  (100%)  best cost so far: 35569990.95
-[STATUS] Worker-1   progress=100.0%  cpu=50.0%
+[MASTER] Progress: 80000 / 100000  (80%)  best cost so far: 35569990.95
+[STATUS] Worker-4   progress=99.5%  cpu=50.0%
+[MASTER] Progress: 90000 / 100000  (90%)  best cost so far: 35569990.95
+[MASTER] Progress: 100000 / 100000  (100%)  best cost so far: 35569990.95
 
 ????????????????????????????????????????????????????????????????
 ?  EVALUATION COMPLETE                                         ?
@@ -95,15 +61,15 @@
 ?  Cost Score      35569990.95                            ?
 ?  Feasible        false                                 ?
 ?  Found by Worker 3                                     ?
-?  Total Time(Par) 7621 ms                                  ?
-?  Total Time(Seq) 6518 ms                                  ?
-?  Workers         6                                     ?
-?  Speedup         0.86                                   ?
-?  Efficiency      0.14                                   ?
-?  Parallel Frac f 1.20                                   ?
-?  Amdahl Max S    -391.08                                ?
+?  Total Time(Par) 3224 ms                                  ?
+?  Total Time(Seq) 3467 ms                                  ?
+?  Workers         4                                     ?
+?  Speedup         1.08                                   ?
+?  Efficiency      0.27                                   ?
+?  Parallel Frac f 0.91                                   ?
+?  Amdahl Max S    3.12                                   ?
 ????????????????????????????????????????????????????????????????
 
-[MASTER] Results saved to: D:\6th semester\PDC_Grid_managment\gridmanagement\results.csv
+[MASTER] Results saved to: C:\Users\ahmed\PDC\results.csv
 [MASTER] Sending SHUTDOWN to all workers...
 [MASTER] Done.

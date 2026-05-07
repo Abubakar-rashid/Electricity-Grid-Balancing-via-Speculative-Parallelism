@@ -5,7 +5,7 @@ Produces weak_results.csv for plot_results.py to consume.
 
 param(
     [string]$WorkersStr = "1,2,4",
-    [int]$CandidatesPerWorker = 1000,
+    [int]$CandidatesPerWorker = 100000,
     [int]$Nodes = 500,
     [int]$Edges = 1000,
     [int]$ChunkSize = 100,

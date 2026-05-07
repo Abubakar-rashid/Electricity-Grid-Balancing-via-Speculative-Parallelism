@@ -5,7 +5,7 @@
 
 param(
     [string]$WorkersStr    = "1,2,4",
-    [string]$CandidatesStr = "1000,5000,10000",
+    [string]$CandidatesStr = "1000,5000,10000,100000",
     [int]$Nodes     = 500,
     [int]$Edges     = 1000,
     [int]$ChunkSize = 100,

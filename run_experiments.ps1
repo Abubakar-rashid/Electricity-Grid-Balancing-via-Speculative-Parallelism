@@ -6,7 +6,7 @@
 
 param(
     [string]$WorkersStr    = "1,2,4",
-    [string]$CandidatesStr = "1000,5000,10000",
+    [string]$CandidatesStr = "1000,5000,10000,100000",
     [int]$Nodes      = 500,
     [int]$Edges      = 1000,
     [int]$ChunkSize  = 100,
@@ -17,10 +17,13 @@ Set-Location $PSScriptRoot
 $ErrorActionPreference = "Stop"
 
 # ── Build once ─────────────────────────────────────────────────────────────────
-Write-Host "[BUILD] Compiling with Maven..." -ForegroundColor Yellow
-mvn package -q -DskipTests
+Write-Host "[BUILD] Compiling with javac..." -ForegroundColor Yellow
+New-Item -ItemType Directory -Force -Path "target\classes" | Out-Null
+$sources = Get-ChildItem -Recurse -Filter "*.java" src\main\java | Select-Object -ExpandProperty FullName
+javac -d target\classes -sourcepath src\main\java $sources
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "[ERROR] Maven build failed." -ForegroundColor Red; exit 1
+    Write-Host "[ERROR] Compilation failed. Check the errors above." -ForegroundColor Red
+    exit 1
 }
 Write-Host "[BUILD] Build successful." -ForegroundColor Green
 

@@ -1,639 +1,261 @@
 [Worker-6] ?????? PDC Grid Management — WORKER NODE ??????
-[Worker-6] Using 18 threads  connecting to localhost:9090
-[Worker-6] GRID_INIT received: 500 nodes  1000 edges  total 200000 candidates
-[Worker-6] Chunk #3  [300, 400)  100 candidates
-[Worker-6] Chunk #3 done in 680 ms  local best: candidate #397  cost=37252276.96
-[Worker-6] Chunk #44  [4400, 4500)  100 candidates
-[Worker-6] Chunk #44 done in 12 ms  local best: candidate #4447  cost=37140215.27
-[Worker-6] Chunk #51  [5100, 5200)  100 candidates
-[Worker-6] Chunk #51 done in 24 ms  local best: candidate #5105  cost=37523784.72
-[Worker-6] Chunk #59  [5900, 6000)  100 candidates
-[Worker-6] Chunk #59 done in 7 ms  local best: candidate #5993  cost=36678600.49
-[Worker-6] Chunk #64  [6400, 6500)  100 candidates
-[Worker-6] Chunk #64 done in 18 ms  local best: candidate #6418  cost=36867474.63
+[Worker-6] Using 4 threads  connecting to localhost:9090
+[Worker-6] GRID_INIT received: 500 nodes  1000 edges  total 100000 candidates
+[Worker-6] Chunk #2  [200, 300)  100 candidates
+[Worker-6] Chunk #2 done in 85 ms  local best: candidate #271  cost=36626953.31
+[Worker-6] Chunk #11  [1100, 1200)  100 candidates
+[Worker-6] Chunk #11 done in 9 ms  local best: candidate #1117  cost=37273546.59
+[Worker-6] Chunk #20  [2000, 2100)  100 candidates
+[Worker-6] Chunk #20 done in 10 ms  local best: candidate #2020  cost=37226599.09
+[Worker-6] Chunk #27  [2700, 2800)  100 candidates
+[Worker-6] Chunk #27 done in 4 ms  local best: candidate #2725  cost=36473761.92
+[Worker-6] Chunk #33  [3300, 3400)  100 candidates
+[Worker-6] Chunk #33 done in 3 ms  local best: candidate #3382  cost=37073325.06
+[Worker-6] Chunk #40  [4000, 4100)  100 candidates
+[Worker-6] Chunk #40 done in 5 ms  local best: candidate #4091  cost=36288658.09
+[Worker-6] Chunk #46  [4600, 4700)  100 candidates
+[Worker-6] Chunk #46 done in 1 ms  local best: candidate #4681  cost=37262643.96
+[Worker-6] Chunk #54  [5400, 5500)  100 candidates
+[Worker-6] Chunk #54 done in 2 ms  local best: candidate #5431  cost=35799468.04
+[Worker-6] Chunk #62  [6200, 6300)  100 candidates
+[Worker-6] Chunk #62 done in 1 ms  local best: candidate #6207  cost=37247141.62
 [Worker-6] Chunk #70  [7000, 7100)  100 candidates
-[Worker-6] Chunk #70 done in 25 ms  local best: candidate #7081  cost=36668244.76
+[Worker-6] Chunk #70 done in 1 ms  local best: candidate #7081  cost=36668244.76
 [Worker-6] Chunk #78  [7800, 7900)  100 candidates
-[Worker-6] Chunk #78 done in 4 ms  local best: candidate #7832  cost=37096918.15
-[Worker-6] Chunk #81  [8100, 8200)  100 candidates
-[Worker-6] Chunk #81 done in 19 ms  local best: candidate #8182  cost=37522350.55
-[Worker-6] Chunk #88  [8800, 8900)  100 candidates
-[Worker-6] Chunk #88 done in 3 ms  local best: candidate #8898  cost=37011686.02
-[Worker-6] Chunk #92  [9200, 9300)  100 candidates
-[Worker-6] Chunk #92 done in 36 ms  local best: candidate #9283  cost=37137652.26
-[Worker-6] Chunk #102  [10200, 10300)  100 candidates
-[Worker-6] Chunk #102 done in 2 ms  local best: candidate #10249  cost=36997805.15
+[Worker-6] Chunk #78 done in 2 ms  local best: candidate #7832  cost=37096918.15
+[Worker-6] Chunk #86  [8600, 8700)  100 candidates
+[Worker-6] Chunk #86 done in 2 ms  local best: candidate #8661  cost=37073643.67
+[Worker-6] Chunk #100  [10000, 10100)  100 candidates
+[Worker-6] Chunk #100 done in 2 ms  local best: candidate #10072  cost=36916484.49
 [Worker-6] Chunk #107  [10700, 10800)  100 candidates
-[Worker-6] Chunk #107 done in 11 ms  local best: candidate #10784  cost=36793749.16
-[Worker-6] Chunk #118  [11800, 11900)  100 candidates
-[Worker-6] Chunk #118 done in 10 ms  local best: candidate #11859  cost=36718189.82
-[Worker-6] Chunk #125  [12500, 12600)  100 candidates
-[Worker-6] Chunk #125 done in 16 ms  local best: candidate #12567  cost=36977836.45
-[Worker-6] Chunk #131  [13100, 13200)  100 candidates
-[Worker-6] Chunk #131 done in 1 ms  local best: candidate #13168  cost=36968007.29
-[Worker-6] Chunk #133  [13300, 13400)  100 candidates
-[Worker-6] Chunk #133 done in 47 ms  local best: candidate #13302  cost=37010727.41
-[Worker-6] Chunk #144  [14400, 14500)  100 candidates
-[Worker-6] Chunk #144 done in 2 ms  local best: candidate #14432  cost=37414085.74
-[Worker-6] Chunk #145  [14500, 14600)  100 candidates
-[Worker-6] Chunk #145 done in 17 ms  local best: candidate #14521  cost=37082911.84
-[Worker-6] Chunk #150  [15000, 15100)  100 candidates
-[Worker-6] Chunk #150 done in 15 ms  local best: candidate #15039  cost=37312844.69
-[Worker-6] Chunk #155  [15500, 15600)  100 candidates
-[Worker-6] Chunk #155 done in 6 ms  local best: candidate #15522  cost=37439521.40
-[Worker-6] Chunk #156  [15600, 15700)  100 candidates
-[Worker-6] Chunk #156 done in 44 ms  local best: candidate #15683  cost=37331280.81
-[Worker-6] Chunk #166  [16600, 16700)  100 candidates
-[Worker-6] Chunk #166 done in 175 ms  local best: candidate #16687  cost=37097061.83
-[Worker-6] Chunk #201  [20100, 20200)  100 candidates
-[Worker-6] Chunk #201 done in 1 ms  local best: candidate #20176  cost=36924594.88
-[Worker-6] Chunk #203  [20300, 20400)  100 candidates
-[Worker-6] Chunk #203 done in 17 ms  local best: candidate #20308  cost=37034689.51
-[Worker-6] Chunk #207  [20700, 20800)  100 candidates
-[Worker-6] Chunk #207 done in 3 ms  local best: candidate #20782  cost=36541305.81
+[Worker-6] Chunk #107 done in 3 ms  local best: candidate #10784  cost=36793749.16
+[Worker-6] Chunk #117  [11700, 11800)  100 candidates
+[Worker-6] Chunk #117 done in 2 ms  local best: candidate #11701  cost=36887054.24
+[Worker-6] Chunk #130  [13000, 13100)  100 candidates
+[Worker-6] Chunk #130 done in 2 ms  local best: candidate #13092  cost=36805749.23
+[Worker-6] Chunk #138  [13800, 13900)  100 candidates
+[Worker-6] Chunk #138 done in 2 ms  local best: candidate #13884  cost=36987028.65
+[Worker-6] Chunk #146  [14600, 14700)  100 candidates
+[Worker-6] Chunk #146 done in 1 ms  local best: candidate #14645  cost=37333145.70
+[Worker-6] Chunk #154  [15400, 15500)  100 candidates
+[Worker-6] Chunk #154 done in 2 ms  local best: candidate #15406  cost=36389512.07
+[Worker-6] Chunk #162  [16200, 16300)  100 candidates
+[Worker-6] Chunk #162 done in 1 ms  local best: candidate #16298  cost=37252630.71
+[Worker-6] Chunk #170  [17000, 17100)  100 candidates
+[Worker-6] Chunk #170 done in 4 ms  local best: candidate #17060  cost=37023217.48
+[Worker-6] Chunk #178  [17800, 17900)  100 candidates
+[Worker-6] Chunk #178 done in 1 ms  local best: candidate #17809  cost=37287712.33
+[Worker-6] Chunk #186  [18600, 18700)  100 candidates
+[Worker-6] Chunk #186 done in 2 ms  local best: candidate #18609  cost=36559296.89
+[Worker-6] Chunk #194  [19400, 19500)  100 candidates
+[Worker-6] Chunk #194 done in 3 ms  local best: candidate #19427  cost=37015515.08
+[Worker-6] Chunk #202  [20200, 20300)  100 candidates
+[Worker-6] Chunk #202 done in 2 ms  local best: candidate #20208  cost=37303201.55
 [Worker-6] Chunk #209  [20900, 21000)  100 candidates
-[Worker-6] Chunk #209 done in 3 ms  local best: candidate #20935  cost=36790653.31
-[Worker-6] Chunk #210  [21000, 21100)  100 candidates
-[Worker-6] Chunk #210 done in 33 ms  local best: candidate #21045  cost=37208569.84
-[Worker-6] Chunk #223  [22300, 22400)  100 candidates
-[Worker-6] Chunk #223 done in 4 ms  local best: candidate #22397  cost=37233740.21
-[Worker-6] Chunk #225  [22500, 22600)  100 candidates
-[Worker-6] Chunk #225 done in 11 ms  local best: candidate #22569  cost=37246184.41
-[Worker-6] Chunk #231  [23100, 23200)  100 candidates
-[Worker-6] Chunk #231 done in 2 ms  local best: candidate #23172  cost=37014232.07
-[Worker-6] Chunk #233  [23300, 23400)  100 candidates
-[Worker-6] Chunk #233 done in 5 ms  local best: candidate #23343  cost=36463272.18
-[Worker-6] Chunk #236  [23600, 23700)  100 candidates
-[Worker-6] Chunk #236 done in 12 ms  local best: candidate #23664  cost=37265062.98
-[Worker-6] Chunk #241  [24100, 24200)  100 candidates
-[Worker-6] Chunk #241 done in 4 ms  local best: candidate #24155  cost=36904469.34
-[Worker-6] Chunk #244  [24400, 24500)  100 candidates
-[Worker-6] Chunk #244 done in 2 ms  local best: candidate #24466  cost=37500281.29
-[Worker-6] Chunk #247  [24700, 24800)  100 candidates
-[Worker-6] Chunk #247 done in 16 ms  local best: candidate #24733  cost=37537769.80
-[Worker-6] Chunk #253  [25300, 25400)  100 candidates
-[Worker-6] Chunk #253 done in 23 ms  local best: candidate #25392  cost=36691176.54
-[Worker-6] Chunk #262  [26200, 26300)  100 candidates
-[Worker-6] Chunk #262 done in 2 ms  local best: candidate #26216  cost=37351244.24
-[Worker-6] Chunk #264  [26400, 26500)  100 candidates
-[Worker-6] Chunk #264 done in 20 ms  local best: candidate #26462  cost=37155929.51
+[Worker-6] Chunk #209 done in 2 ms  local best: candidate #20935  cost=36790653.31
+[Worker-6] Chunk #218  [21800, 21900)  100 candidates
+[Worker-6] Chunk #218 done in 2 ms  local best: candidate #21879  cost=36710024.12
+[Worker-6] Chunk #226  [22600, 22700)  100 candidates
+[Worker-6] Chunk #226 done in 2 ms  local best: candidate #22640  cost=37136178.92
+[Worker-6] Chunk #235  [23500, 23600)  100 candidates
+[Worker-6] Chunk #235 done in 1 ms  local best: candidate #23503  cost=37076067.89
+[Worker-6] Chunk #243  [24300, 24400)  100 candidates
+[Worker-6] Chunk #243 done in 1 ms  local best: candidate #24337  cost=36515013.11
+[Worker-6] Chunk #251  [25100, 25200)  100 candidates
+[Worker-6] Chunk #251 done in 2 ms  local best: candidate #25149  cost=36990389.15
+[Worker-6] Chunk #259  [25900, 26000)  100 candidates
+[Worker-6] Chunk #259 done in 1 ms  local best: candidate #25911  cost=37220871.62
+[Worker-6] Chunk #267  [26700, 26800)  100 candidates
+[Worker-6] Chunk #267 done in 2 ms  local best: candidate #26729  cost=36966396.30
 [Worker-6] Chunk #275  [27500, 27600)  100 candidates
-[Worker-6] Chunk #275 done in 28 ms  local best: candidate #27532  cost=37182959.47
-[Worker-6] Chunk #280  [28000, 28100)  100 candidates
-[Worker-6] Chunk #280 done in 22 ms  local best: candidate #28055  cost=37138595.31
-[Worker-6] Chunk #287  [28700, 28800)  100 candidates
-[Worker-6] Chunk #287 done in 13 ms  local best: candidate #28739  cost=37051147.67
-[Worker-6] Chunk #292  [29200, 29300)  100 candidates
-[Worker-6] Chunk #292 done in 18 ms  local best: candidate #29251  cost=37599419.41
-[Worker-6] Chunk #302  [30200, 30300)  100 candidates
-[Worker-6] Chunk #302 done in 10 ms  local best: candidate #30255  cost=37321981.00
-[Worker-6] Chunk #308  [30800, 30900)  100 candidates
-[Worker-6] Chunk #308 done in 15 ms  local best: candidate #30843  cost=36982132.39
+[Worker-6] Chunk #275 done in 1 ms  local best: candidate #27532  cost=37182959.47
+[Worker-6] Chunk #283  [28300, 28400)  100 candidates
+[Worker-6] Chunk #283 done in 2 ms  local best: candidate #28359  cost=36973770.82
+[Worker-6] Chunk #291  [29100, 29200)  100 candidates
+[Worker-6] Chunk #291 done in 1 ms  local best: candidate #29167  cost=36963553.61
+[Worker-6] Chunk #299  [29900, 30000)  100 candidates
+[Worker-6] Chunk #299 done in 1 ms  local best: candidate #29957  cost=36545324.97
+[Worker-6] Chunk #306  [30600, 30700)  100 candidates
+[Worker-6] Chunk #306 done in 2 ms  local best: candidate #30634  cost=36824769.31
 [Worker-6] Chunk #314  [31400, 31500)  100 candidates
-[Worker-6] Chunk #314 done in 14 ms  local best: candidate #31428  cost=37415088.44
-[Worker-6] Chunk #321  [32100, 32200)  100 candidates
-[Worker-6] Chunk #321 done in 27 ms  local best: candidate #32136  cost=37054544.88
-[Worker-6] Chunk #328  [32800, 32900)  100 candidates
-[Worker-6] Chunk #328 done in 38 ms  local best: candidate #32841  cost=36538075.21
-[Worker-6] Chunk #338  [33800, 33900)  100 candidates
-[Worker-6] Chunk #338 done in 3 ms  local best: candidate #33891  cost=36847263.10
-[Worker-6] Chunk #346  [34600, 34700)  100 candidates
-[Worker-6] Chunk #346 done in 9 ms  local best: candidate #34602  cost=36825338.86
-[Worker-6] Chunk #350  [35000, 35100)  100 candidates
-[Worker-6] Chunk #350 done in 15 ms  local best: candidate #35026  cost=37169920.07
-[Worker-6] Chunk #358  [35800, 35900)  100 candidates
-[Worker-6] Chunk #358 done in 11 ms  local best: candidate #35844  cost=37015456.25
+[Worker-6] Chunk #314 done in 2 ms  local best: candidate #31428  cost=37415088.44
+[Worker-6] Chunk #322  [32200, 32300)  100 candidates
+[Worker-6] Chunk #322 done in 2 ms  local best: candidate #32220  cost=37063068.68
+[Worker-6] Chunk #330  [33000, 33100)  100 candidates
+[Worker-6] Chunk #330 done in 2 ms  local best: candidate #33044  cost=36971739.73
+[Worker-6] Chunk #340  [34000, 34100)  100 candidates
+[Worker-6] Chunk #340 done in 3 ms  local best: candidate #34078  cost=36335577.21
+[Worker-6] Chunk #348  [34800, 34900)  100 candidates
+[Worker-6] Chunk #348 done in 2 ms  local best: candidate #34834  cost=37146825.48
+[Worker-6] Chunk #355  [35500, 35600)  100 candidates
+[Worker-6] Chunk #355 done in 3 ms  local best: candidate #35527  cost=36876166.32
 [Worker-6] Chunk #362  [36200, 36300)  100 candidates
-[Worker-6] Chunk #362 done in 7 ms  local best: candidate #36269  cost=36641655.65
-[Worker-6] Chunk #368  [36800, 36900)  100 candidates
-[Worker-6] Chunk #368 done in 4 ms  local best: candidate #36828  cost=36872565.40
-[Worker-6] Chunk #369  [36900, 37000)  100 candidates
-[Worker-6] Chunk #369 done in 4 ms  local best: candidate #36938  cost=37511484.95
+[Worker-6] Chunk #362 done in 1 ms  local best: candidate #36269  cost=36641655.65
 [Worker-6] Chunk #370  [37000, 37100)  100 candidates
-[Worker-6] Chunk #370 done in 19 ms  local best: candidate #37059  cost=37182185.68
-[Worker-6] Chunk #379  [37900, 38000)  100 candidates
-[Worker-6] Chunk #379 done in 20 ms  local best: candidate #37955  cost=36973733.20
-[Worker-6] Chunk #384  [38400, 38500)  100 candidates
-[Worker-6] Chunk #384 done in 42 ms  local best: candidate #38496  cost=36875571.76
-[Worker-6] Chunk #399  [39900, 40000)  100 candidates
-[Worker-6] Chunk #399 done in 3 ms  local best: candidate #39923  cost=37259832.69
+[Worker-6] Chunk #370 done in 3 ms  local best: candidate #37059  cost=37182185.68
+[Worker-6] Chunk #378  [37800, 37900)  100 candidates
+[Worker-6] Chunk #378 done in 2 ms  local best: candidate #37896  cost=37322801.98
+[Worker-6] Chunk #386  [38600, 38700)  100 candidates
+[Worker-6] Chunk #386 done in 4 ms  local best: candidate #38603  cost=36501587.55
+[Worker-6] Chunk #393  [39300, 39400)  100 candidates
+[Worker-6] Chunk #393 done in 3 ms  local best: candidate #39310  cost=37104701.73
 [Worker-6] Chunk #400  [40000, 40100)  100 candidates
 [Worker-6] Chunk #400 done in 2 ms  local best: candidate #40003  cost=36768087.99
-[Worker-6] Chunk #404  [40400, 40500)  100 candidates
-[Worker-6] Chunk #404 done in 18 ms  local best: candidate #40494  cost=37099170.19
-[Worker-6] Chunk #410  [41000, 41100)  100 candidates
-[Worker-6] Chunk #410 done in 20 ms  local best: candidate #41077  cost=37123410.29
-[Worker-6] Chunk #418  [41800, 41900)  100 candidates
-[Worker-6] Chunk #418 done in 8 ms  local best: candidate #41891  cost=37405003.69
+[Worker-6] Chunk #407  [40700, 40800)  100 candidates
+[Worker-6] Chunk #407 done in 3 ms  local best: candidate #40711  cost=37058450.36
+[Worker-6] Chunk #415  [41500, 41600)  100 candidates
+[Worker-6] Chunk #415 done in 2 ms  local best: candidate #41578  cost=37230375.67
 [Worker-6] Chunk #423  [42300, 42400)  100 candidates
-[Worker-6] Chunk #423 done in 9 ms  local best: candidate #42396  cost=37388935.24
-[Worker-6] Chunk #429  [42900, 43000)  100 candidates
-[Worker-6] Chunk #429 done in 29 ms  local best: candidate #42971  cost=37012235.93
-[Worker-6] Chunk #435  [43500, 43600)  100 candidates
-[Worker-6] Chunk #435 done in 38 ms  local best: candidate #43532  cost=37056456.03
-[Worker-6] Chunk #444  [44400, 44500)  100 candidates
-[Worker-6] Chunk #444 done in 3 ms  local best: candidate #44466  cost=36802966.27
-[Worker-6] Chunk #446  [44600, 44700)  100 candidates
-[Worker-6] Chunk #446 done in 45 ms  local best: candidate #44648  cost=36829769.65
-[Worker-6] Chunk #456  [45600, 45700)  100 candidates
-[Worker-6] Chunk #456 done in 3 ms  local best: candidate #45648  cost=37027874.72
-[Worker-6] Chunk #458  [45800, 45900)  100 candidates
-[Worker-6] Chunk #458 done in 31 ms  local best: candidate #45813  cost=36618979.81
-[Worker-6] Chunk #467  [46700, 46800)  100 candidates
-[Worker-6] Chunk #467 done in 17 ms  local best: candidate #46747  cost=36741576.19
-[Worker-6] Chunk #477  [47700, 47800)  100 candidates
-[Worker-6] Chunk #477 done in 2 ms  local best: candidate #47790  cost=36441013.02
-[Worker-6] Chunk #482  [48200, 48300)  100 candidates
-[Worker-6] Chunk #482 done in 23 ms  local best: candidate #48268  cost=36919274.83
+[Worker-6] Chunk #423 done in 2 ms  local best: candidate #42396  cost=37388935.24
+[Worker-6] Chunk #431  [43100, 43200)  100 candidates
+[Worker-6] Chunk #431 done in 10 ms  local best: candidate #43196  cost=36879454.86
+[Worker-6] Chunk #440  [44000, 44100)  100 candidates
+[Worker-6] Chunk #440 done in 3 ms  local best: candidate #44097  cost=36087437.77
+[Worker-6] Chunk #450  [45000, 45100)  100 candidates
+[Worker-6] Chunk #450 done in 2 ms  local best: candidate #45030  cost=36667333.85
+[Worker-6] Chunk #461  [46100, 46200)  100 candidates
+[Worker-6] Chunk #461 done in 2 ms  local best: candidate #46184  cost=37122536.74
+[Worker-6] Chunk #468  [46800, 46900)  100 candidates
+[Worker-6] Chunk #468 done in 1 ms  local best: candidate #46808  cost=36619915.01
+[Worker-6] Chunk #476  [47600, 47700)  100 candidates
+[Worker-6] Chunk #476 done in 1 ms  local best: candidate #47664  cost=36643907.40
+[Worker-6] Chunk #484  [48400, 48500)  100 candidates
+[Worker-6] Chunk #484 done in 2 ms  local best: candidate #48469  cost=37051809.26
+[Worker-6] Chunk #492  [49200, 49300)  100 candidates
+[Worker-6] Chunk #492 done in 1 ms  local best: candidate #49235  cost=37084085.15
 [Worker-6] Chunk #500  [50000, 50100)  100 candidates
-[Worker-6] Chunk #500 done in 1 ms  local best: candidate #50062  cost=36906659.67
-[Worker-6] Chunk #506  [50600, 50700)  100 candidates
-[Worker-6] Chunk #506 done in 11 ms  local best: candidate #50602  cost=37085899.43
-[Worker-6] Chunk #517  [51700, 51800)  100 candidates
-[Worker-6] Chunk #517 done in 22 ms  local best: candidate #51707  cost=36955226.07
-[Worker-6] Chunk #529  [52900, 53000)  100 candidates
-[Worker-6] Chunk #529 done in 3 ms  local best: candidate #52995  cost=36623768.19
-[Worker-6] Chunk #535  [53500, 53600)  100 candidates
-[Worker-6] Chunk #535 done in 17 ms  local best: candidate #53551  cost=36541869.41
-[Worker-6] Chunk #547  [54700, 54800)  100 candidates
-[Worker-6] Chunk #547 done in 2 ms  local best: candidate #54798  cost=36987004.03
-[Worker-6] Chunk #552  [55200, 55300)  100 candidates
-[Worker-6] Chunk #552 done in 3 ms  local best: candidate #55206  cost=36917004.46
-[Worker-6] Chunk #559  [55900, 56000)  100 candidates
-[Worker-6] Chunk #559 done in 15 ms  local best: candidate #55967  cost=36814408.62
-[Worker-6] Chunk #564  [56400, 56500)  100 candidates
-[Worker-6] Chunk #564 done in 4 ms  local best: candidate #56418  cost=37019308.59
-[Worker-6] Chunk #568  [56800, 56900)  100 candidates
-[Worker-6] Chunk #568 done in 6 ms  local best: candidate #56855  cost=37432685.49
+[Worker-6] Chunk #500 done in 2 ms  local best: candidate #50062  cost=36906659.67
+[Worker-6] Chunk #507  [50700, 50800)  100 candidates
+[Worker-6] Chunk #507 done in 2 ms  local best: candidate #50700  cost=36715233.58
+[Worker-6] Chunk #515  [51500, 51600)  100 candidates
+[Worker-6] Chunk #515 done in 2 ms  local best: candidate #51579  cost=36679018.39
+[Worker-6] Chunk #523  [52300, 52400)  100 candidates
+[Worker-6] Chunk #523 done in 2 ms  local best: candidate #52303  cost=36920197.93
+[Worker-6] Chunk #530  [53000, 53100)  100 candidates
+[Worker-6] Chunk #530 done in 6 ms  local best: candidate #53040  cost=36747292.57
+[Worker-6] Chunk #538  [53800, 53900)  100 candidates
+[Worker-6] Chunk #538 done in 2 ms  local best: candidate #53878  cost=37369152.67
+[Worker-6] Chunk #546  [54600, 54700)  100 candidates
+[Worker-6] Chunk #546 done in 1 ms  local best: candidate #54636  cost=36984072.50
+[Worker-6] Chunk #554  [55400, 55500)  100 candidates
+[Worker-6] Chunk #554 done in 1 ms  local best: candidate #55481  cost=37139817.35
+[Worker-6] Chunk #562  [56200, 56300)  100 candidates
+[Worker-6] Chunk #562 done in 0 ms  local best: candidate #56207  cost=37017040.45
 [Worker-6] Chunk #570  [57000, 57100)  100 candidates
-[Worker-6] Chunk #570 done in 21 ms  local best: candidate #57097  cost=36767268.91
-[Worker-6] Chunk #577  [57700, 57800)  100 candidates
-[Worker-6] Chunk #577 done in 32 ms  local best: candidate #57705  cost=36730701.08
-[Worker-6] Chunk #584  [58400, 58500)  100 candidates
-[Worker-6] Chunk #584 done in 30 ms  local best: candidate #58460  cost=37096014.60
-[Worker-6] Chunk #592  [59200, 59300)  100 candidates
-[Worker-6] Chunk #592 done in 2 ms  local best: candidate #59223  cost=37000728.99
+[Worker-6] Chunk #570 done in 3 ms  local best: candidate #57097  cost=36767268.91
+[Worker-6] Chunk #579  [57900, 58000)  100 candidates
+[Worker-6] Chunk #579 done in 1 ms  local best: candidate #57903  cost=37116972.82
+[Worker-6] Chunk #587  [58700, 58800)  100 candidates
+[Worker-6] Chunk #587 done in 1 ms  local best: candidate #58742  cost=36557258.17
 [Worker-6] Chunk #595  [59500, 59600)  100 candidates
-[Worker-6] Chunk #595 done in 26 ms  local best: candidate #59547  cost=36406678.06
-[Worker-6] Chunk #602  [60200, 60300)  100 candidates
-[Worker-6] Chunk #602 done in 24 ms  local best: candidate #60252  cost=37078337.90
-[Worker-6] Chunk #613  [61300, 61400)  100 candidates
-[Worker-6] Chunk #613 done in 5 ms  local best: candidate #61345  cost=36775037.49
-[Worker-6] Chunk #615  [61500, 61600)  100 candidates
-[Worker-6] Chunk #615 done in 2 ms  local best: candidate #61524  cost=36878748.94
-[Worker-6] Chunk #616  [61600, 61700)  100 candidates
-[Worker-6] Chunk #616 done in 17 ms  local best: candidate #61608  cost=36916470.94
-[Worker-6] Chunk #622  [62200, 62300)  100 candidates
-[Worker-6] Chunk #622 done in 27 ms  local best: candidate #62201  cost=37340078.70
-[Worker-6] Chunk #632  [63200, 63300)  100 candidates
-[Worker-6] Chunk #632 done in 15 ms  local best: candidate #63221  cost=36189954.91
-[Worker-6] Chunk #638  [63800, 63900)  100 candidates
-[Worker-6] Chunk #638 done in 4 ms  local best: candidate #63871  cost=35919449.01
-[Worker-6] Chunk #640  [64000, 64100)  100 candidates
-[Worker-6] Chunk #640 done in 1 ms  local best: candidate #64074  cost=37422862.68
+[Worker-6] Chunk #595 done in 1 ms  local best: candidate #59547  cost=36406678.06
+[Worker-6] Chunk #603  [60300, 60400)  100 candidates
+[Worker-6] Chunk #603 done in 1 ms  local best: candidate #60332  cost=37127380.37
+[Worker-6] Chunk #610  [61000, 61100)  100 candidates
+[Worker-6] Chunk #610 done in 1 ms  local best: candidate #61003  cost=36908153.67
+[Worker-6] Chunk #618  [61800, 61900)  100 candidates
+[Worker-6] Chunk #618 done in 1 ms  local best: candidate #61881  cost=36828714.60
+[Worker-6] Chunk #626  [62600, 62700)  100 candidates
+[Worker-6] Chunk #626 done in 1 ms  local best: candidate #62663  cost=37422390.05
+[Worker-6] Chunk #634  [63400, 63500)  100 candidates
+[Worker-6] Chunk #634 done in 1 ms  local best: candidate #63465  cost=37025263.63
 [Worker-6] Chunk #642  [64200, 64300)  100 candidates
-[Worker-6] Chunk #642 done in 41 ms  local best: candidate #64257  cost=37249810.55
-[Worker-6] Chunk #655  [65500, 65600)  100 candidates
-[Worker-6] Chunk #655 done in 3 ms  local best: candidate #65552  cost=36707123.16
-[Worker-6] Chunk #657  [65700, 65800)  100 candidates
-[Worker-6] Chunk #657 done in 36 ms  local best: candidate #65761  cost=36756308.91
-[Worker-6] Chunk #671  [67100, 67200)  100 candidates
-[Worker-6] Chunk #671 done in 1 ms  local best: candidate #67163  cost=36650427.94
-[Worker-6] Chunk #672  [67200, 67300)  100 candidates
-[Worker-6] Chunk #672 done in 22 ms  local best: candidate #67294  cost=37470819.85
-[Worker-6] Chunk #681  [68100, 68200)  100 candidates
-[Worker-6] Chunk #681 done in 25 ms  local best: candidate #68102  cost=36548241.62
+[Worker-6] Chunk #642 done in 1 ms  local best: candidate #64257  cost=37249810.55
+[Worker-6] Chunk #650  [65000, 65100)  100 candidates
+[Worker-6] Chunk #650 done in 1 ms  local best: candidate #65068  cost=36157959.55
+[Worker-6] Chunk #658  [65800, 65900)  100 candidates
+[Worker-6] Chunk #658 done in 1 ms  local best: candidate #65819  cost=37260485.22
+[Worker-6] Chunk #666  [66600, 66700)  100 candidates
+[Worker-6] Chunk #666 done in 1 ms  local best: candidate #66652  cost=37126228.51
+[Worker-6] Chunk #674  [67400, 67500)  100 candidates
+[Worker-6] Chunk #674 done in 1 ms  local best: candidate #67465  cost=37147479.09
+[Worker-6] Chunk #682  [68200, 68300)  100 candidates
+[Worker-6] Chunk #682 done in 2 ms  local best: candidate #68272  cost=37080488.96
 [Worker-6] Chunk #690  [69000, 69100)  100 candidates
-[Worker-6] Chunk #690 done in 44 ms  local best: candidate #69051  cost=37124204.12
-[Worker-6] Chunk #703  [70300, 70400)  100 candidates
-[Worker-6] Chunk #703 done in 5 ms  local best: candidate #70356  cost=37422943.96
-[Worker-6] Chunk #704  [70400, 70500)  100 candidates
-[Worker-6] Chunk #704 done in 62 ms  local best: candidate #70428  cost=36954477.75
-[Worker-6] Chunk #722  [72200, 72300)  100 candidates
-[Worker-6] Chunk #722 done in 4 ms  local best: candidate #72281  cost=36328027.41
-[Worker-6] Chunk #724  [72400, 72500)  100 candidates
-[Worker-6] Chunk #724 done in 1 ms  local best: candidate #72474  cost=36281339.58
-[Worker-6] Chunk #726  [72600, 72700)  100 candidates
-[Worker-6] Chunk #726 done in 18 ms  local best: candidate #72619  cost=36622044.73
+[Worker-6] Chunk #690 done in 1 ms  local best: candidate #69051  cost=37124204.12
+[Worker-6] Chunk #698  [69800, 69900)  100 candidates
+[Worker-6] Chunk #698 done in 1 ms  local best: candidate #69898  cost=36766188.46
+[Worker-6] Chunk #706  [70600, 70700)  100 candidates
+[Worker-6] Chunk #706 done in 3 ms  local best: candidate #70619  cost=37217266.12
+[Worker-6] Chunk #715  [71500, 71600)  100 candidates
+[Worker-6] Chunk #715 done in 1 ms  local best: candidate #71535  cost=36918581.50
+[Worker-6] Chunk #725  [72500, 72600)  100 candidates
+[Worker-6] Chunk #725 done in 1 ms  local best: candidate #72598  cost=37702097.97
 [Worker-6] Chunk #733  [73300, 73400)  100 candidates
-[Worker-6] Chunk #733 done in 3 ms  local best: candidate #73354  cost=36740107.44
-[Worker-6] Chunk #735  [73500, 73600)  100 candidates
-[Worker-6] Chunk #735 done in 2 ms  local best: candidate #73582  cost=37003264.47
-[Worker-6] Chunk #736  [73600, 73700)  100 candidates
-[Worker-6] Chunk #736 done in 17 ms  local best: candidate #73683  cost=35923067.17
-[Worker-6] Chunk #746  [74600, 74700)  100 candidates
-[Worker-6] Chunk #746 done in 14 ms  local best: candidate #74604  cost=37204717.24
-[Worker-6] Chunk #755  [75500, 75600)  100 candidates
-[Worker-6] Chunk #755 done in 14 ms  local best: candidate #75553  cost=36299405.79
-[Worker-6] Chunk #760  [76000, 76100)  100 candidates
-[Worker-6] Chunk #760 done in 3 ms  local best: candidate #76000  cost=37264835.08
-[Worker-6] Chunk #763  [76300, 76400)  100 candidates
-[Worker-6] Chunk #763 done in 1 ms  local best: candidate #76344  cost=36119163.96
-[Worker-6] Chunk #766  [76600, 76700)  100 candidates
-[Worker-6] Chunk #766 done in 3 ms  local best: candidate #76602  cost=37664850.60
-[Worker-6] Chunk #768  [76800, 76900)  100 candidates
-[Worker-6] Chunk #768 done in 4 ms  local best: candidate #76884  cost=37253922.84
-[Worker-6] Chunk #769  [76900, 77000)  100 candidates
-[Worker-6] Chunk #769 done in 3 ms  local best: candidate #76927  cost=37086832.42
-[Worker-6] Chunk #771  [77100, 77200)  100 candidates
-[Worker-6] Chunk #771 done in 6 ms  local best: candidate #77123  cost=37128647.77
-[Worker-6] Chunk #776  [77600, 77700)  100 candidates
-[Worker-6] Chunk #776 done in 16 ms  local best: candidate #77638  cost=37531127.48
-[Worker-6] Chunk #784  [78400, 78500)  100 candidates
-[Worker-6] Chunk #784 done in 16 ms  local best: candidate #78495  cost=36798725.64
-[Worker-6] Chunk #795  [79500, 79600)  100 candidates
-[Worker-6] Chunk #795 done in 12 ms  local best: candidate #79510  cost=37538643.41
-[Worker-6] Chunk #800  [80000, 80100)  100 candidates
-[Worker-6] Chunk #800 done in 8 ms  local best: candidate #80088  cost=36854231.81
+[Worker-6] Chunk #733 done in 2 ms  local best: candidate #73354  cost=36740107.44
+[Worker-6] Chunk #743  [74300, 74400)  100 candidates
+[Worker-6] Chunk #743 done in 2 ms  local best: candidate #74342  cost=37524255.25
+[Worker-6] Chunk #751  [75100, 75200)  100 candidates
+[Worker-6] Chunk #751 done in 3 ms  local best: candidate #75126  cost=36843356.79
+[Worker-6] Chunk #759  [75900, 76000)  100 candidates
+[Worker-6] Chunk #759 done in 1 ms  local best: candidate #75925  cost=37237108.54
+[Worker-6] Chunk #767  [76700, 76800)  100 candidates
+[Worker-6] Chunk #767 done in 1 ms  local best: candidate #76773  cost=36917583.77
+[Worker-6] Chunk #774  [77400, 77500)  100 candidates
+[Worker-6] Chunk #774 done in 1 ms  local best: candidate #77498  cost=37011152.07
+[Worker-6] Chunk #782  [78200, 78300)  100 candidates
+[Worker-6] Chunk #782 done in 1 ms  local best: candidate #78240  cost=37036373.66
+[Worker-6] Chunk #790  [79000, 79100)  100 candidates
+[Worker-6] Chunk #790 done in 3 ms  local best: candidate #79011  cost=37075773.83
+[Worker-6] Chunk #799  [79900, 80000)  100 candidates
+[Worker-6] Chunk #799 done in 1 ms  local best: candidate #79967  cost=37388738.55
 [Worker-6] Chunk #808  [80800, 80900)  100 candidates
-[Worker-6] Chunk #808 done in 11 ms  local best: candidate #80880  cost=36344720.66
-[Worker-6] Chunk #813  [81300, 81400)  100 candidates
-[Worker-6] Chunk #813 done in 11 ms  local best: candidate #81358  cost=37024786.44
-[Worker-6] Chunk #820  [82000, 82100)  100 candidates
-[Worker-6] Chunk #820 done in 19 ms  local best: candidate #82035  cost=37334370.48
-[Worker-6] Chunk #830  [83000, 83100)  100 candidates
-[Worker-6] Chunk #830 done in 13 ms  local best: candidate #83002  cost=36697751.68
-[Worker-6] Chunk #836  [83600, 83700)  100 candidates
-[Worker-6] Chunk #836 done in 3 ms  local best: candidate #83614  cost=37236373.97
-[Worker-6] Chunk #837  [83700, 83800)  100 candidates
-[Worker-6] Chunk #837 done in 14 ms  local best: candidate #83777  cost=36792142.34
-[Worker-6] Chunk #844  [84400, 84500)  100 candidates
-[Worker-6] Chunk #844 done in 10 ms  local best: candidate #84460  cost=36966851.24
-[Worker-6] Chunk #849  [84900, 85000)  100 candidates
-[Worker-6] Chunk #849 done in 4 ms  local best: candidate #84990  cost=37025721.28
-[Worker-6] Chunk #855  [85500, 85600)  100 candidates
-[Worker-6] Chunk #855 done in 13 ms  local best: candidate #85598  cost=37546523.46
-[Worker-6] Chunk #861  [86100, 86200)  100 candidates
-[Worker-6] Chunk #861 done in 20 ms  local best: candidate #86109  cost=36954326.92
-[Worker-6] Chunk #867  [86700, 86800)  100 candidates
-[Worker-6] Chunk #867 done in 13 ms  local best: candidate #86738  cost=36662741.57
-[Worker-6] Chunk #876  [87600, 87700)  100 candidates
-[Worker-6] Chunk #876 done in 15 ms  local best: candidate #87657  cost=37382198.58
-[Worker-6] Chunk #883  [88300, 88400)  100 candidates
-[Worker-6] Chunk #883 done in 5 ms  local best: candidate #88364  cost=36849292.56
-[Worker-6] Chunk #887  [88700, 88800)  100 candidates
-[Worker-6] Chunk #887 done in 3 ms  local best: candidate #88707  cost=36342275.60
-[Worker-6] Chunk #889  [88900, 89000)  100 candidates
-[Worker-6] Chunk #889 done in 16 ms  local best: candidate #88953  cost=36924548.76
-[Worker-6] Chunk #897  [89700, 89800)  100 candidates
-[Worker-6] Chunk #897 done in 1 ms  local best: candidate #89709  cost=36988025.11
-[Worker-6] Chunk #899  [89900, 90000)  100 candidates
-[Worker-6] Chunk #899 done in 12 ms  local best: candidate #89911  cost=37118974.59
-[Worker-6] Chunk #907  [90700, 90800)  100 candidates
-[Worker-6] Chunk #907 done in 24 ms  local best: candidate #90744  cost=37340724.38
-[Worker-6] Chunk #916  [91600, 91700)  100 candidates
-[Worker-6] Chunk #916 done in 32 ms  local best: candidate #91649  cost=36580744.84
-[Worker-6] Chunk #929  [92900, 93000)  100 candidates
-[Worker-6] Chunk #929 done in 2 ms  local best: candidate #92922  cost=36959473.74
-[Worker-6] Chunk #930  [93000, 93100)  100 candidates
-[Worker-6] Chunk #930 done in 12 ms  local best: candidate #93010  cost=37092186.70
-[Worker-6] Chunk #938  [93800, 93900)  100 candidates
-[Worker-6] Chunk #938 done in 15 ms  local best: candidate #93827  cost=36604578.04
-[Worker-6] Chunk #945  [94500, 94600)  100 candidates
-[Worker-6] Chunk #945 done in 6 ms  local best: candidate #94536  cost=36147116.25
+[Worker-6] Chunk #808 done in 2 ms  local best: candidate #80880  cost=36344720.66
+[Worker-6] Chunk #816  [81600, 81700)  100 candidates
+[Worker-6] Chunk #816 done in 2 ms  local best: candidate #81639  cost=37156513.41
+[Worker-6] Chunk #824  [82400, 82500)  100 candidates
+[Worker-6] Chunk #824 done in 2 ms  local best: candidate #82493  cost=37008749.06
+[Worker-6] Chunk #832  [83200, 83300)  100 candidates
+[Worker-6] Chunk #832 done in 1 ms  local best: candidate #83224  cost=37087315.29
+[Worker-6] Chunk #840  [84000, 84100)  100 candidates
+[Worker-6] Chunk #840 done in 2 ms  local best: candidate #84092  cost=37376988.15
+[Worker-6] Chunk #850  [85000, 85100)  100 candidates
+[Worker-6] Chunk #850 done in 1 ms  local best: candidate #85026  cost=37058525.41
+[Worker-6] Chunk #856  [85600, 85700)  100 candidates
+[Worker-6] Chunk #856 done in 2 ms  local best: candidate #85674  cost=37367622.10
+[Worker-6] Chunk #864  [86400, 86500)  100 candidates
+[Worker-6] Chunk #864 done in 1 ms  local best: candidate #86462  cost=37269621.05
+[Worker-6] Chunk #872  [87200, 87300)  100 candidates
+[Worker-6] Chunk #872 done in 1 ms  local best: candidate #87281  cost=37134783.65
+[Worker-6] Chunk #879  [87900, 88000)  100 candidates
+[Worker-6] Chunk #879 done in 3 ms  local best: candidate #87971  cost=36927657.98
+[Worker-6] Chunk #888  [88800, 88900)  100 candidates
+[Worker-6] Chunk #888 done in 1 ms  local best: candidate #88848  cost=35817400.73
+[Worker-6] Chunk #896  [89600, 89700)  100 candidates
+[Worker-6] Chunk #896 done in 4 ms  local best: candidate #89615  cost=37169932.03
+[Worker-6] Chunk #904  [90400, 90500)  100 candidates
+[Worker-6] Chunk #904 done in 3 ms  local best: candidate #90417  cost=37227338.67
+[Worker-6] Chunk #912  [91200, 91300)  100 candidates
+[Worker-6] Chunk #912 done in 1 ms  local best: candidate #91222  cost=36836857.78
+[Worker-6] Chunk #919  [91900, 92000)  100 candidates
+[Worker-6] Chunk #919 done in 1 ms  local best: candidate #91937  cost=36775346.68
+[Worker-6] Chunk #927  [92700, 92800)  100 candidates
+[Worker-6] Chunk #927 done in 1 ms  local best: candidate #92751  cost=36909342.04
+[Worker-6] Chunk #935  [93500, 93600)  100 candidates
+[Worker-6] Chunk #935 done in 2 ms  local best: candidate #93560  cost=37132469.42
+[Worker-6] Chunk #943  [94300, 94400)  100 candidates
+[Worker-6] Chunk #943 done in 1 ms  local best: candidate #94308  cost=36788729.21
 [Worker-6] Chunk #951  [95100, 95200)  100 candidates
-[Worker-6] Chunk #951 done in 13 ms  local best: candidate #95120  cost=36946791.78
-[Worker-6] Chunk #958  [95800, 95900)  100 candidates
-[Worker-6] Chunk #958 done in 6 ms  local best: candidate #95860  cost=36652193.02
-[Worker-6] Chunk #961  [96100, 96200)  100 candidates
-[Worker-6] Chunk #961 done in 23 ms  local best: candidate #96161  cost=37043751.69
-[Worker-6] Chunk #968  [96800, 96900)  100 candidates
-[Worker-6] Chunk #968 done in 2 ms  local best: candidate #96832  cost=36827117.80
-[Worker-6] Chunk #969  [96900, 97000)  100 candidates
-[Worker-6] Chunk #969 done in 18 ms  local best: candidate #96990  cost=36750757.34
-[Worker-6] Chunk #978  [97800, 97900)  100 candidates
-[Worker-6] Chunk #978 done in 15 ms  local best: candidate #97812  cost=36951069.02
-[Worker-6] Chunk #986  [98600, 98700)  100 candidates
-[Worker-6] Chunk #986 done in 13 ms  local best: candidate #98603  cost=36516448.37
-[Worker-6] Chunk #992  [99200, 99300)  100 candidates
-[Worker-6] Chunk #992 done in 1 ms  local best: candidate #99277  cost=36512321.78
-[Worker-6] Chunk #996  [99600, 99700)  100 candidates
-[Worker-6] Chunk #996 done in 26 ms  local best: candidate #99618  cost=36665505.74
-[Worker-6] Chunk #1005  [100500, 100600)  100 candidates
-[Worker-6] Chunk #1005 done in 11 ms  local best: candidate #100500  cost=37038200.24
-[Worker-6] Chunk #1013  [101300, 101400)  100 candidates
-[Worker-6] Chunk #1013 done in 12 ms  local best: candidate #101347  cost=36898004.97
-[Worker-6] Chunk #1019  [101900, 102000)  100 candidates
-[Worker-6] Chunk #1019 done in 9 ms  local best: candidate #101973  cost=37100524.72
-[Worker-6] Chunk #1023  [102300, 102400)  100 candidates
-[Worker-6] Chunk #1023 done in 12 ms  local best: candidate #102397  cost=37307303.69
-[Worker-6] Chunk #1029  [102900, 103000)  100 candidates
-[Worker-6] Chunk #1029 done in 24 ms  local best: candidate #102941  cost=36602428.46
-[Worker-6] Chunk #1041  [104100, 104200)  100 candidates
-[Worker-6] Chunk #1041 done in 7 ms  local best: candidate #104120  cost=36894864.22
-[Worker-6] Chunk #1047  [104700, 104800)  100 candidates
-[Worker-6] Chunk #1047 done in 3 ms  local best: candidate #104742  cost=36869884.72
-[Worker-6] Chunk #1050  [105000, 105100)  100 candidates
-[Worker-6] Chunk #1050 done in 3 ms  local best: candidate #105060  cost=37276374.00
-[Worker-6] Chunk #1052  [105200, 105300)  100 candidates
-[Worker-6] Chunk #1052 done in 2 ms  local best: candidate #105272  cost=37293086.35
-[Worker-6] Chunk #1054  [105400, 105500)  100 candidates
-[Worker-6] Chunk #1054 done in 16 ms  local best: candidate #105433  cost=37031999.80
-[Worker-6] Chunk #1064  [106400, 106500)  100 candidates
-[Worker-6] Chunk #1064 done in 5 ms  local best: candidate #106431  cost=36629268.52
-[Worker-6] Chunk #1070  [107000, 107100)  100 candidates
-[Worker-6] Chunk #1070 done in 4 ms  local best: candidate #107048  cost=36825259.64
-[Worker-6] Chunk #1075  [107500, 107600)  100 candidates
-[Worker-6] Chunk #1075 done in 15 ms  local best: candidate #107580  cost=37240051.81
-[Worker-6] Chunk #1082  [108200, 108300)  100 candidates
-[Worker-6] Chunk #1082 done in 6 ms  local best: candidate #108247  cost=36994677.26
-[Worker-6] Chunk #1087  [108700, 108800)  100 candidates
-[Worker-6] Chunk #1087 done in 21 ms  local best: candidate #108761  cost=37202593.96
-[Worker-6] Chunk #1096  [109600, 109700)  100 candidates
-[Worker-6] Chunk #1096 done in 11 ms  local best: candidate #109637  cost=37173877.12
-[Worker-6] Chunk #1101  [110100, 110200)  100 candidates
-[Worker-6] Chunk #1101 done in 13 ms  local best: candidate #110157  cost=37241800.16
-[Worker-6] Chunk #1108  [110800, 110900)  100 candidates
-[Worker-6] Chunk #1108 done in 1 ms  local best: candidate #110877  cost=36982680.23
-[Worker-6] Chunk #1114  [111400, 111500)  100 candidates
-[Worker-6] Chunk #1114 done in 12 ms  local best: candidate #111453  cost=37723251.49
-[Worker-6] Chunk #1120  [112000, 112100)  100 candidates
-[Worker-6] Chunk #1120 done in 10 ms  local best: candidate #112071  cost=36973448.80
-[Worker-6] Chunk #1127  [112700, 112800)  100 candidates
-[Worker-6] Chunk #1127 done in 14 ms  local best: candidate #112765  cost=36727054.77
-[Worker-6] Chunk #1134  [113400, 113500)  100 candidates
-[Worker-6] Chunk #1134 done in 4 ms  local best: candidate #113453  cost=36767481.81
-[Worker-6] Chunk #1136  [113600, 113700)  100 candidates
-[Worker-6] Chunk #1136 done in 2 ms  local best: candidate #113698  cost=37164896.74
-[Worker-6] Chunk #1137  [113700, 113800)  100 candidates
-[Worker-6] Chunk #1137 done in 17 ms  local best: candidate #113784  cost=36485486.30
-[Worker-6] Chunk #1145  [114500, 114600)  100 candidates
-[Worker-6] Chunk #1145 done in 27 ms  local best: candidate #114540  cost=36784958.74
-[Worker-6] Chunk #1155  [115500, 115600)  100 candidates
-[Worker-6] Chunk #1155 done in 24 ms  local best: candidate #115533  cost=37225181.72
-[Worker-6] Chunk #1158  [115800, 115900)  100 candidates
-[Worker-6] Chunk #1158 done in 20 ms  local best: candidate #115847  cost=36990991.11
-[Worker-6] Chunk #1168  [116800, 116900)  100 candidates
-[Worker-6] Chunk #1168 done in 15 ms  local best: candidate #116877  cost=37251926.90
-[Worker-6] Chunk #1177  [117700, 117800)  100 candidates
-[Worker-6] Chunk #1177 done in 14 ms  local best: candidate #117744  cost=36889648.79
-[Worker-6] Chunk #1183  [118300, 118400)  100 candidates
-[Worker-6] Chunk #1183 done in 4 ms  local best: candidate #118362  cost=36651369.23
-[Worker-6] Chunk #1187  [118700, 118800)  100 candidates
-[Worker-6] Chunk #1187 done in 2 ms  local best: candidate #118721  cost=37369432.26
-[Worker-6] Chunk #1188  [118800, 118900)  100 candidates
-[Worker-6] Chunk #1188 done in 3 ms  local best: candidate #118875  cost=37238611.00
-[Worker-6] Chunk #1189  [118900, 119000)  100 candidates
-[Worker-6] Chunk #1189 done in 19 ms  local best: candidate #118964  cost=37343143.20
-[Worker-6] Chunk #1197  [119700, 119800)  100 candidates
-[Worker-6] Chunk #1197 done in 19 ms  local best: candidate #119712  cost=37188114.50
-[Worker-6] Chunk #1204  [120400, 120500)  100 candidates
-[Worker-6] Chunk #1204 done in 25 ms  local best: candidate #120485  cost=36842887.22
-[Worker-6] Chunk #1214  [121400, 121500)  100 candidates
-[Worker-6] Chunk #1214 done in 35 ms  local best: candidate #121491  cost=37011535.26
-[Worker-6] Chunk #1224  [122400, 122500)  100 candidates
-[Worker-6] Chunk #1224 done in 2 ms  local best: candidate #122427  cost=37101305.64
-[Worker-6] Chunk #1227  [122700, 122800)  100 candidates
-[Worker-6] Chunk #1227 done in 27 ms  local best: candidate #122746  cost=36736292.74
-[Worker-6] Chunk #1239  [123900, 124000)  100 candidates
-[Worker-6] Chunk #1239 done in 3 ms  local best: candidate #123971  cost=36934170.12
-[Worker-6] Chunk #1242  [124200, 124300)  100 candidates
-[Worker-6] Chunk #1242 done in 2 ms  local best: candidate #124239  cost=37022549.96
-[Worker-6] Chunk #1244  [124400, 124500)  100 candidates
-[Worker-6] Chunk #1244 done in 2 ms  local best: candidate #124408  cost=36959111.98
-[Worker-6] Chunk #1247  [124700, 124800)  100 candidates
-[Worker-6] Chunk #1247 done in 4 ms  local best: candidate #124786  cost=37264642.09
-[Worker-6] Chunk #1249  [124900, 125000)  100 candidates
-[Worker-6] Chunk #1249 done in 43 ms  local best: candidate #124931  cost=37215163.84
-[Worker-6] Chunk #1263  [126300, 126400)  100 candidates
-[Worker-6] Chunk #1263 done in 3 ms  local best: candidate #126369  cost=36875240.76
-[Worker-6] Chunk #1264  [126400, 126500)  100 candidates
-[Worker-6] Chunk #1264 done in 32 ms  local best: candidate #126407  cost=37041989.94
-[Worker-6] Chunk #1276  [127600, 127700)  100 candidates
-[Worker-6] Chunk #1276 done in 1 ms  local best: candidate #127637  cost=37230672.32
-[Worker-6] Chunk #1283  [128300, 128400)  100 candidates
-[Worker-6] Chunk #1283 done in 43 ms  local best: candidate #128336  cost=36982088.36
-[Worker-6] Chunk #1293  [129300, 129400)  100 candidates
-[Worker-6] Chunk #1293 done in 10 ms  local best: candidate #129349  cost=37123569.41
-[Worker-6] Chunk #1304  [130400, 130500)  100 candidates
-[Worker-6] Chunk #1304 done in 22 ms  local best: candidate #130446  cost=36918006.76
-[Worker-6] Chunk #1319  [131900, 132000)  100 candidates
-[Worker-6] Chunk #1319 done in 2 ms  local best: candidate #131910  cost=36689856.65
-[Worker-6] Chunk #1328  [132800, 132900)  100 candidates
-[Worker-6] Chunk #1328 done in 24 ms  local best: candidate #132870  cost=36991710.61
-[Worker-6] Chunk #1344  [134400, 134500)  100 candidates
-[Worker-6] Chunk #1344 done in 2 ms  local best: candidate #134425  cost=37336685.69
-[Worker-6] Chunk #1359  [135900, 136000)  100 candidates
-[Worker-6] Chunk #1359 done in 2 ms  local best: candidate #135962  cost=37471338.98
-[Worker-6] Chunk #1366  [136600, 136700)  100 candidates
-[Worker-6] Chunk #1366 done in 1 ms  local best: candidate #136636  cost=36832325.94
-[Worker-6] Chunk #1369  [136900, 137000)  100 candidates
-[Worker-6] Chunk #1369 done in 42 ms  local best: candidate #136986  cost=37481553.43
-[Worker-6] Chunk #1400  [140000, 140100)  100 candidates
-[Worker-6] Chunk #1400 done in 0 ms  local best: candidate #140057  cost=37107197.17
-[Worker-6] Chunk #1405  [140500, 140600)  100 candidates
-[Worker-6] Chunk #1405 done in 2 ms  local best: candidate #140517  cost=36587946.39
-[Worker-6] Chunk #1407  [140700, 140800)  100 candidates
-[Worker-6] Chunk #1407 done in 14 ms  local best: candidate #140764  cost=37513048.07
-[Worker-6] Chunk #1412  [141200, 141300)  100 candidates
-[Worker-6] Chunk #1412 done in 5 ms  local best: candidate #141229  cost=36691835.58
-[Worker-6] Chunk #1414  [141400, 141500)  100 candidates
-[Worker-6] Chunk #1414 done in 4 ms  local best: candidate #141497  cost=36726948.45
-[Worker-6] Chunk #1415  [141500, 141600)  100 candidates
-[Worker-6] Chunk #1415 done in 2 ms  local best: candidate #141550  cost=37163684.16
-[Worker-6] Chunk #1420  [142000, 142100)  100 candidates
-[Worker-6] Chunk #1420 done in 12 ms  local best: candidate #142090  cost=37221434.02
-[Worker-6] Chunk #1426  [142600, 142700)  100 candidates
-[Worker-6] Chunk #1426 done in 1 ms  local best: candidate #142673  cost=37134339.52
-[Worker-6] Chunk #1427  [142700, 142800)  100 candidates
-[Worker-6] Chunk #1427 done in 29 ms  local best: candidate #142784  cost=36585342.97
-[Worker-6] Chunk #1438  [143800, 143900)  100 candidates
-[Worker-6] Chunk #1438 done in 30 ms  local best: candidate #143894  cost=36990855.19
-[Worker-6] Chunk #1451  [145100, 145200)  100 candidates
-[Worker-6] Chunk #1451 done in 4 ms  local best: candidate #145101  cost=37340788.81
-[Worker-6] Chunk #1454  [145400, 145500)  100 candidates
-[Worker-6] Chunk #1454 done in 3 ms  local best: candidate #145475  cost=37123518.01
-[Worker-6] Chunk #1457  [145700, 145800)  100 candidates
-[Worker-6] Chunk #1457 done in 2 ms  local best: candidate #145773  cost=37392088.38
-[Worker-6] Chunk #1459  [145900, 146000)  100 candidates
-[Worker-6] Chunk #1459 done in 11 ms  local best: candidate #145993  cost=37099522.04
-[Worker-6] Chunk #1466  [146600, 146700)  100 candidates
-[Worker-6] Chunk #1466 done in 10 ms  local best: candidate #146604  cost=36620698.95
-[Worker-6] Chunk #1470  [147000, 147100)  100 candidates
-[Worker-6] Chunk #1470 done in 8 ms  local best: candidate #147010  cost=37009705.70
-[Worker-6] Chunk #1475  [147500, 147600)  100 candidates
-[Worker-6] Chunk #1475 done in 16 ms  local best: candidate #147596  cost=35917610.97
-[Worker-6] Chunk #1484  [148400, 148500)  100 candidates
-[Worker-6] Chunk #1484 done in 3 ms  local best: candidate #148409  cost=37431050.94
-[Worker-6] Chunk #1485  [148500, 148600)  100 candidates
-[Worker-6] Chunk #1485 done in 12 ms  local best: candidate #148591  cost=37052356.34
-[Worker-6] Chunk #1490  [149000, 149100)  100 candidates
-[Worker-6] Chunk #1490 done in 11 ms  local best: candidate #149098  cost=36699259.31
-[Worker-6] Chunk #1496  [149600, 149700)  100 candidates
-[Worker-6] Chunk #1496 done in 11 ms  local best: candidate #149671  cost=37287906.49
-[Worker-6] Chunk #1502  [150200, 150300)  100 candidates
-[Worker-6] Chunk #1502 done in 31 ms  local best: candidate #150249  cost=37132217.61
-[Worker-6] Chunk #1509  [150900, 151000)  100 candidates
-[Worker-6] Chunk #1509 done in 8 ms  local best: candidate #150912  cost=37482888.38
-[Worker-6] Chunk #1512  [151200, 151300)  100 candidates
-[Worker-6] Chunk #1512 done in 5 ms  local best: candidate #151244  cost=37169274.09
-[Worker-6] Chunk #1514  [151400, 151500)  100 candidates
-[Worker-6] Chunk #1514 done in 40 ms  local best: candidate #151485  cost=37020588.30
-[Worker-6] Chunk #1521  [152100, 152200)  100 candidates
-[Worker-6] Chunk #1521 done in 0 ms  local best: candidate #152153  cost=37063342.77
-[Worker-6] Chunk #1524  [152400, 152500)  100 candidates
-[Worker-6] Chunk #1524 done in 5 ms  local best: candidate #152466  cost=37261579.27
-[Worker-6] Chunk #1527  [152700, 152800)  100 candidates
-[Worker-6] Chunk #1527 done in 4 ms  local best: candidate #152725  cost=37312965.07
-[Worker-6] Chunk #1530  [153000, 153100)  100 candidates
-[Worker-6] Chunk #1530 done in 2 ms  local best: candidate #153024  cost=36928219.10
-[Worker-6] Chunk #1533  [153300, 153400)  100 candidates
-[Worker-6] Chunk #1533 done in 5 ms  local best: candidate #153304  cost=37049649.48
-[Worker-6] Chunk #1538  [153800, 153900)  100 candidates
-[Worker-6] Chunk #1538 done in 7 ms  local best: candidate #153852  cost=36867434.74
-[Worker-6] Chunk #1541  [154100, 154200)  100 candidates
-[Worker-6] Chunk #1541 done in 2 ms  local best: candidate #154160  cost=36904121.56
-[Worker-6] Chunk #1544  [154400, 154500)  100 candidates
-[Worker-6] Chunk #1544 done in 1 ms  local best: candidate #154460  cost=37302425.15
-[Worker-6] Chunk #1548  [154800, 154900)  100 candidates
-[Worker-6] Chunk #1548 done in 3 ms  local best: candidate #154870  cost=37429875.82
-[Worker-6] Chunk #1551  [155100, 155200)  100 candidates
-[Worker-6] Chunk #1551 done in 1 ms  local best: candidate #155108  cost=37199339.43
-[Worker-6] Chunk #1553  [155300, 155400)  100 candidates
-[Worker-6] Chunk #1553 done in 4 ms  local best: candidate #155319  cost=36222044.34
-[Worker-6] Chunk #1556  [155600, 155700)  100 candidates
-[Worker-6] Chunk #1556 done in 2 ms  local best: candidate #155685  cost=37287980.90
-[Worker-6] Chunk #1559  [155900, 156000)  100 candidates
-[Worker-6] Chunk #1559 done in 2 ms  local best: candidate #155958  cost=37603213.83
-[Worker-6] Chunk #1562  [156200, 156300)  100 candidates
-[Worker-6] Chunk #1562 done in 32 ms  local best: candidate #156276  cost=37041890.48
-[Worker-6] Chunk #1574  [157400, 157500)  100 candidates
-[Worker-6] Chunk #1574 done in 3 ms  local best: candidate #157491  cost=37221171.71
-[Worker-6] Chunk #1577  [157700, 157800)  100 candidates
-[Worker-6] Chunk #1577 done in 1 ms  local best: candidate #157739  cost=36157412.67
-[Worker-6] Chunk #1580  [158000, 158100)  100 candidates
-[Worker-6] Chunk #1580 done in 3 ms  local best: candidate #158080  cost=36676994.40
-[Worker-6] Chunk #1583  [158300, 158400)  100 candidates
-[Worker-6] Chunk #1583 done in 1 ms  local best: candidate #158365  cost=37254209.86
-[Worker-6] Chunk #1587  [158700, 158800)  100 candidates
-[Worker-6] Chunk #1587 done in 0 ms  local best: candidate #158784  cost=37133515.28
-[Worker-6] Chunk #1590  [159000, 159100)  100 candidates
-[Worker-6] Chunk #1590 done in 1 ms  local best: candidate #159042  cost=36798098.78
-[Worker-6] Chunk #1593  [159300, 159400)  100 candidates
-[Worker-6] Chunk #1593 done in 3 ms  local best: candidate #159312  cost=37163627.03
-[Worker-6] Chunk #1596  [159600, 159700)  100 candidates
-[Worker-6] Chunk #1596 done in 2 ms  local best: candidate #159601  cost=37456103.25
-[Worker-6] Chunk #1602  [160200, 160300)  100 candidates
-[Worker-6] Chunk #1602 done in 1 ms  local best: candidate #160236  cost=36523768.78
-[Worker-6] Chunk #1606  [160600, 160700)  100 candidates
-[Worker-6] Chunk #1606 done in 4 ms  local best: candidate #160604  cost=37469827.30
-[Worker-6] Chunk #1611  [161100, 161200)  100 candidates
-[Worker-6] Chunk #1611 done in 3 ms  local best: candidate #161169  cost=37492757.54
-[Worker-6] Chunk #1616  [161600, 161700)  100 candidates
-[Worker-6] Chunk #1616 done in 5 ms  local best: candidate #161605  cost=37307432.37
-[Worker-6] Chunk #1623  [162300, 162400)  100 candidates
-[Worker-6] Chunk #1623 done in 8 ms  local best: candidate #162326  cost=36096704.97
-[Worker-6] Chunk #1627  [162700, 162800)  100 candidates
-[Worker-6] Chunk #1627 done in 5 ms  local best: candidate #162797  cost=37171719.55
-[Worker-6] Chunk #1631  [163100, 163200)  100 candidates
-[Worker-6] Chunk #1631 done in 8 ms  local best: candidate #163141  cost=37193296.20
-[Worker-6] Chunk #1640  [164000, 164100)  100 candidates
-[Worker-6] Chunk #1640 done in 12 ms  local best: candidate #164070  cost=36992045.28
-[Worker-6] Chunk #1648  [164800, 164900)  100 candidates
-[Worker-6] Chunk #1648 done in 4 ms  local best: candidate #164856  cost=37161423.44
-[Worker-6] Chunk #1652  [165200, 165300)  100 candidates
-[Worker-6] Chunk #1652 done in 6 ms  local best: candidate #165269  cost=37122400.81
-[Worker-6] Chunk #1658  [165800, 165900)  100 candidates
-[Worker-6] Chunk #1658 done in 9 ms  local best: candidate #165806  cost=37293381.22
-[Worker-6] Chunk #1664  [166400, 166500)  100 candidates
-[Worker-6] Chunk #1664 done in 22 ms  local best: candidate #166492  cost=36868615.78
-[Worker-6] Chunk #1681  [168100, 168200)  100 candidates
-[Worker-6] Chunk #1681 done in 1 ms  local best: candidate #168193  cost=37674685.53
-[Worker-6] Chunk #1683  [168300, 168400)  100 candidates
-[Worker-6] Chunk #1683 done in 15 ms  local best: candidate #168314  cost=36951004.39
-[Worker-6] Chunk #1694  [169400, 169500)  100 candidates
-[Worker-6] Chunk #1694 done in 2 ms  local best: candidate #169447  cost=37001168.47
-[Worker-6] Chunk #1700  [170000, 170100)  100 candidates
-[Worker-6] Chunk #1700 done in 14 ms  local best: candidate #170070  cost=36456877.53
-[Worker-6] Chunk #1709  [170900, 171000)  100 candidates
-[Worker-6] Chunk #1709 done in 19 ms  local best: candidate #170934  cost=36551513.18
-[Worker-6] Chunk #1724  [172400, 172500)  100 candidates
-[Worker-6] Chunk #1724 done in 3 ms  local best: candidate #172492  cost=37101479.47
-[Worker-6] Chunk #1727  [172700, 172800)  100 candidates
-[Worker-6] Chunk #1727 done in 8 ms  local best: candidate #172759  cost=36756236.29
-[Worker-6] Chunk #1734  [173400, 173500)  100 candidates
-[Worker-6] Chunk #1734 done in 6 ms  local best: candidate #173419  cost=36850391.24
-[Worker-6] Chunk #1737  [173700, 173800)  100 candidates
-[Worker-6] Chunk #1737 done in 15 ms  local best: candidate #173701  cost=37069604.23
-[Worker-6] Chunk #1748  [174800, 174900)  100 candidates
-[Worker-6] Chunk #1748 done in 4 ms  local best: candidate #174840  cost=37408191.82
-[Worker-6] Chunk #1751  [175100, 175200)  100 candidates
-[Worker-6] Chunk #1751 done in 15 ms  local best: candidate #175128  cost=37194607.56
-[Worker-6] Chunk #1758  [175800, 175900)  100 candidates
-[Worker-6] Chunk #1758 done in 10 ms  local best: candidate #175873  cost=36656181.44
-[Worker-6] Chunk #1765  [176500, 176600)  100 candidates
-[Worker-6] Chunk #1765 done in 7 ms  local best: candidate #176558  cost=36449356.57
-[Worker-6] Chunk #1769  [176900, 177000)  100 candidates
-[Worker-6] Chunk #1769 done in 5 ms  local best: candidate #176993  cost=37495956.98
-[Worker-6] Chunk #1777  [177700, 177800)  100 candidates
-[Worker-6] Chunk #1777 done in 3 ms  local best: candidate #177782  cost=37362179.72
-[Worker-6] Chunk #1781  [178100, 178200)  100 candidates
-[Worker-6] Chunk #1781 done in 3 ms  local best: candidate #178166  cost=37184404.68
-[Worker-6] Chunk #1787  [178700, 178800)  100 candidates
-[Worker-6] Chunk #1787 done in 10 ms  local best: candidate #178764  cost=37425786.25
-[Worker-6] Chunk #1794  [179400, 179500)  100 candidates
-[Worker-6] Chunk #1794 done in 1 ms  local best: candidate #179462  cost=37126293.11
-[Worker-6] Chunk #1797  [179700, 179800)  100 candidates
-[Worker-6] Chunk #1797 done in 3 ms  local best: candidate #179727  cost=36720565.48
-[Worker-6] Chunk #1799  [179900, 180000)  100 candidates
-[Worker-6] Chunk #1799 done in 1 ms  local best: candidate #179909  cost=36699106.06
-[Worker-6] Chunk #1804  [180400, 180500)  100 candidates
-[Worker-6] Chunk #1804 done in 68 ms  local best: candidate #180455  cost=36641628.63
-[Worker-6] Chunk #1829  [182900, 183000)  100 candidates
-[Worker-6] Chunk #1829 done in 6 ms  local best: candidate #182916  cost=37140565.64
-[Worker-6] Chunk #1834  [183400, 183500)  100 candidates
-[Worker-6] Chunk #1834 done in 7 ms  local best: candidate #183459  cost=37499932.34
-[Worker-6] Chunk #1839  [183900, 184000)  100 candidates
-[Worker-6] Chunk #1839 done in 6 ms  local best: candidate #183994  cost=37142595.64
-[Worker-6] Chunk #1844  [184400, 184500)  100 candidates
-[Worker-6] Chunk #1844 done in 39 ms  local best: candidate #184425  cost=37064270.58
-[Worker-6] Chunk #1865  [186500, 186600)  100 candidates
-[Worker-6] Chunk #1865 done in 4 ms  local best: candidate #186511  cost=36985133.26
-[Worker-6] Chunk #1868  [186800, 186900)  100 candidates
-[Worker-6] Chunk #1868 done in 3 ms  local best: candidate #186868  cost=36915950.12
-[Worker-6] Chunk #1872  [187200, 187300)  100 candidates
-[Worker-6] Chunk #1872 done in 2 ms  local best: candidate #187290  cost=36957059.36
-[Worker-6] Chunk #1875  [187500, 187600)  100 candidates
-[Worker-6] Chunk #1875 done in 2 ms  local best: candidate #187518  cost=36359544.88
-[Worker-6] Chunk #1878  [187800, 187900)  100 candidates
-[Worker-6] Chunk #1878 done in 9 ms  local best: candidate #187878  cost=37325261.56
-[Worker-6] Chunk #1886  [188600, 188700)  100 candidates
-[Worker-6] Chunk #1886 done in 4 ms  local best: candidate #188674  cost=37525099.21
-[Worker-6] Chunk #1889  [188900, 189000)  100 candidates
-[Worker-6] Chunk #1889 done in 17 ms  local best: candidate #188908  cost=37330694.00
-[Worker-6] Chunk #1896  [189600, 189700)  100 candidates
-[Worker-6] Chunk #1896 done in 17 ms  local best: candidate #189605  cost=37476152.04
-[Worker-6] Chunk #1908  [190800, 190900)  100 candidates
-[Worker-6] Chunk #1908 done in 3 ms  local best: candidate #190899  cost=37551530.04
-[Worker-6] Chunk #1911  [191100, 191200)  100 candidates
-[Worker-6] Chunk #1911 done in 9 ms  local best: candidate #191136  cost=36746592.94
-[Worker-6] Chunk #1916  [191600, 191700)  100 candidates
-[Worker-6] Chunk #1916 done in 21 ms  local best: candidate #191622  cost=36889039.14
-[Worker-6] Chunk #1923  [192300, 192400)  100 candidates
-[Worker-6] Chunk #1923 done in 80 ms  local best: candidate #192355  cost=36599294.63
-[Worker-6] Chunk #1945  [194500, 194600)  100 candidates
-[Worker-6] Chunk #1945 done in 6 ms  local best: candidate #194541  cost=37420785.01
-[Worker-6] Chunk #1948  [194800, 194900)  100 candidates
-[Worker-6] Chunk #1948 done in 15 ms  local best: candidate #194853  cost=37473753.49
-[Worker-6] Chunk #1955  [195500, 195600)  100 candidates
-[Worker-6] Chunk #1955 done in 6 ms  local best: candidate #195528  cost=37083087.92
-[Worker-6] Chunk #1959  [195900, 196000)  100 candidates
-[Worker-6] Chunk #1959 done in 10 ms  local best: candidate #195935  cost=37256105.03
-[Worker-6] Chunk #1960  [196000, 196100)  100 candidates
-[Worker-6] Chunk #1960 done in 3 ms  local best: candidate #196013  cost=37657544.87
-[Worker-6] Chunk #1963  [196300, 196400)  100 candidates
-[Worker-6] Chunk #1963 done in 13 ms  local best: candidate #196317  cost=37033445.97
-[Worker-6] Chunk #1967  [196700, 196800)  100 candidates
-[Worker-6] Chunk #1967 done in 11 ms  local best: candidate #196785  cost=37026471.61
-[Worker-6] Chunk #1973  [197300, 197400)  100 candidates
-[Worker-6] Chunk #1973 done in 6 ms  local best: candidate #197301  cost=37007256.89
-[Worker-6] Chunk #1979  [197900, 198000)  100 candidates
-[Worker-6] Chunk #1979 done in 4 ms  local best: candidate #197959  cost=36538638.89
-[Worker-6] Chunk #1983  [198300, 198400)  100 candidates
-[Worker-6] Chunk #1983 done in 2 ms  local best: candidate #198381  cost=36531655.85
-[Worker-6] Chunk #1985  [198500, 198600)  100 candidates
-[Worker-6] Chunk #1985 done in 0 ms  local best: candidate #198581  cost=36701726.42
-[Worker-6] Chunk #1988  [198800, 198900)  100 candidates
-[Worker-6] Chunk #1988 done in 28 ms  local best: candidate #198874  cost=36593615.43
+[Worker-6] Chunk #951 done in 1 ms  local best: candidate #95120  cost=36946791.78
+[Worker-6] Chunk #959  [95900, 96000)  100 candidates
+[Worker-6] Chunk #959 done in 1 ms  local best: candidate #95948  cost=37049523.47
+[Worker-6] Chunk #967  [96700, 96800)  100 candidates
+[Worker-6] Chunk #967 done in 2 ms  local best: candidate #96770  cost=36756504.90
+[Worker-6] Chunk #975  [97500, 97600)  100 candidates
+[Worker-6] Chunk #975 done in 2 ms  local best: candidate #97551  cost=36768689.32
+[Worker-6] Chunk #983  [98300, 98400)  100 candidates
+[Worker-6] Chunk #983 done in 1 ms  local best: candidate #98328  cost=37325188.10
+[Worker-6] Chunk #990  [98911, 98979)  68 candidates
+[Worker-6] Chunk #990 done in 1 ms  local best: candidate #98926  cost=36582358.29
+[Worker-6] Chunk #998  [99347, 99387)  40 candidates
+[Worker-6] Chunk #998 done in 1 ms  local best: candidate #99384  cost=36991213.78
+[Worker-6] Chunk #1007  [99630, 99653)  23 candidates
+[Worker-6] Chunk #1007 done in 1 ms  local best: candidate #99642  cost=37508931.41
+[Worker-6] Chunk #1015  [99775, 99789)  14 candidates
+[Worker-6] Chunk #1015 done in 0 ms  local best: candidate #99780  cost=37588290.57
+[Worker-6] Chunk #1022  [99855, 99865)  10 candidates
+[Worker-6] Chunk #1022 done in 1 ms  local best: candidate #99864  cost=37558572.83
+[Worker-6] Chunk #1030  [99935, 99945)  10 candidates
+[Worker-6] Chunk #1030 done in 0 ms  local best: candidate #99941  cost=37983844.05
 [Worker-6] SHUTDOWN received.
-[Worker-6] Finished.  Chunks processed: 317  Local best: candidate #147596  cost=35917610.97
+[Worker-6] Finished.  Chunks processed: 128  Local best: candidate #5431  cost=35799468.04

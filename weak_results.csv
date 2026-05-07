@@ -1,0 +1,4 @@
+Workers,Candidates,T_seq(ms),T_par(ms),Speedup,Efficiency,ParallelFraction,Correctness
+1,100000,5380,6210,0.87,0.87,Infinity,true
+2,200000,8900,8490,1.05,0.52,0.91,true
+4,400000,14462,14079,1.03,0.26,0.96,true
