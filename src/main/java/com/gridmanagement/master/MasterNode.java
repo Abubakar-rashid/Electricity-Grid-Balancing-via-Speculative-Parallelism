@@ -58,6 +58,7 @@ public class MasterNode {
     private final int totalCandidates;
     private final int chunkSize;
     private final int totalChunks;
+    private final boolean adaptiveGranularity;
 
     // ── Grid ──────────────────────────────────────────────────────────────
     private GridSnapshot grid;
@@ -89,11 +90,16 @@ public class MasterNode {
     // ─────────────────────────────────────────────────────────────────────
 
     public MasterNode(int port, int expectedWorkers, int totalCandidates, int chunkSize) {
-        this.port             = port;
-        this.expectedWorkers  = expectedWorkers;
-        this.totalCandidates  = totalCandidates;
-        this.chunkSize        = chunkSize;
-        this.totalChunks      = (int) Math.ceil((double) totalCandidates / chunkSize);
+        this(port, expectedWorkers, totalCandidates, chunkSize, true);
+    }
+
+    public MasterNode(int port, int expectedWorkers, int totalCandidates, int chunkSize, boolean adaptiveGranularity) {
+        this.port                 = port;
+        this.expectedWorkers      = expectedWorkers;
+        this.totalCandidates      = totalCandidates;
+        this.chunkSize            = chunkSize;
+        this.adaptiveGranularity  = adaptiveGranularity;
+        this.totalChunks          = (int) Math.ceil((double) totalCandidates / chunkSize);
     }
 
     // ── Public entry ──────────────────────────────────────────────────────
@@ -115,7 +121,11 @@ public class MasterNode {
         runSequentialBaseline();
 
         // ── Step 2: Task preparation ──────────────────────────────────────
-        System.out.printf("[MASTER] Using Adaptive Task Granularity (Initial target chunks: %d)%n", totalChunks);
+        if (adaptiveGranularity) {
+            System.out.printf("[MASTER] Using Adaptive Task Granularity (Initial target chunks: %d)%n", totalChunks);
+        } else {
+            System.out.printf("[MASTER] Using Fixed Task Granularity (Chunk size: %d)%n", chunkSize);
+        }
 
         // ── Step 3: Accept workers ────────────────────────────────────────
         System.out.printf("[MASTER] Waiting for %d worker(s) on port %d...%n",
@@ -188,14 +198,20 @@ public class MasterNode {
         int remaining = totalCandidates - currentTaskStart.get();
         if (remaining <= 0) return 0; // queue exhausted
 
-        // Adaptive Task Granularity: larger chunks initially, smaller towards the end
-        int dynamicChunkSize = Math.max(10, remaining / (expectedWorkers * 2));
-        dynamicChunkSize = Math.min(dynamicChunkSize, chunkSize); // cap at configured chunk size
+        int actualChunkSize;
+        if (adaptiveGranularity) {
+            // Adaptive Task Granularity: larger chunks initially, smaller towards the end
+            actualChunkSize = Math.max(10, remaining / (expectedWorkers * 2));
+            actualChunkSize = Math.min(actualChunkSize, chunkSize); // cap at configured chunk size
+        } else {
+            // Fixed chunk size (baseline)
+            actualChunkSize = chunkSize;
+        }
         
-        int start = currentTaskStart.getAndAdd(dynamicChunkSize);
+        int start = currentTaskStart.getAndAdd(actualChunkSize);
         if (start >= totalCandidates) return 0;
         
-        int end = Math.min(start + dynamicChunkSize, totalCandidates);
+        int end = Math.min(start + actualChunkSize, totalCandidates);
         int cid = nextChunkId.getAndIncrement();
         
         proxy.send(Message.taskAssign(cid, start, end));

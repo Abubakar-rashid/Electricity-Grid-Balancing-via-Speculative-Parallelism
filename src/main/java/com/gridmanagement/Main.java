@@ -69,8 +69,17 @@ public class Main {
                 int    candidates = intArg(args, 4, DEF_CANDIDATES);
                 int    chunkSize  = intArg(args, 5, DEF_CHUNK_SIZE);
                 int    port       = intArg(args, 6, DEF_PORT);
+                
+                // Check for --baseline flag to disable adaptive granularity
+                boolean adaptive = true;
+                for (String arg : args) {
+                    if ("--baseline".equals(arg)) {
+                        adaptive = false;
+                        break;
+                    }
+                }
 
-                new MasterNode(port, workers, candidates, chunkSize)
+                new MasterNode(port, workers, candidates, chunkSize, adaptive)
                         .run(nodes, edges);
             }
 
