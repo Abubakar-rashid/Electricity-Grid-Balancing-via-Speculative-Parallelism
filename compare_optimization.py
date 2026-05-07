@@ -1,141 +1,220 @@
 #!/usr/bin/env python3
 """
 compare_optimization.py
-Compares baseline (fixed granularity) vs optimized (adaptive granularity) results.
-Generates side-by-side speedup and efficiency plots.
+Comparative analysis: Baseline (fixed chunk) vs Optimized (adaptive chunk).
+
+Outputs go to  plots/  subdirectory:
+  - speedup_comparison.png      all candidate sizes on one speedup chart
+  - efficiency_comparison.png   all candidate sizes on one efficiency chart
+  - improvement_bar.png         % improvement bar chart per (workers, candidates)
+  - optimization_summary.txt    text report
 
 Usage: python compare_optimization.py
 """
 
-import csv
-import collections
-import os
+import csv, collections, os
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+import numpy as np
 
-ROOT = os.path.dirname(__file__)
-BASELINE_CSV = os.path.join(ROOT, 'results_baseline.csv')
+ROOT          = os.path.dirname(os.path.abspath(__file__))
+BASELINE_CSV  = os.path.join(ROOT, 'results_baseline.csv')
 OPTIMIZED_CSV = os.path.join(ROOT, 'results_optimized.csv')
+PLOTS_DIR     = os.path.join(ROOT, 'plots')
+os.makedirs(PLOTS_DIR, exist_ok=True)
 
+# ── 1. Parse ───────────────────────────────────────────────────────────────────
 
-def parse_results(path):
-    """Parse CSV file and return list of measurement dicts."""
+def parse(path):
     rows = []
     if not os.path.exists(path):
-        print(f'Warning: {path} not found.')
+        print(f'  [WARN] {os.path.basename(path)} not found, skipping.')
         return rows
-    with open(path, newline='') as f:
-        reader = csv.DictReader(f)
-        for r in reader:
+    with open(path, newline='', encoding='utf-8-sig') as f:
+        for r in csv.DictReader(f):
             try:
-                w = int(r['Workers'])
-                c = int(r['Candidates'])
-                t_seq = float(r['T_seq(ms)'])
-                t_par = float(r['T_par(ms)'])
-                s = float(r.get('Speedup') or (t_seq / t_par if t_par > 0 else 0))
-                e = float(r.get('Efficiency') or (s / w if w > 0 else 0))
-                rows.append({'w': w, 'c': c, 't_seq': t_seq, 't_par': t_par, 's': s, 'e': e})
+                w, c   = int(r['Workers']), int(r['Candidates'])
+                ts, tp = float(r['T_seq(ms)']), float(r['T_par(ms)'])
+                s  = float(r.get('Speedup')    or (ts / tp  if tp > 0 else 0))
+                e  = float(r.get('Efficiency') or (s  / w   if w  > 0 else 0))
+                rows.append(dict(w=w, c=c, ts=ts, tp=tp, s=s, e=e))
             except Exception as ex:
-                print(f'Skipping row due to parse error: {ex}')
+                print(f'  [SKIP] {ex}')
     return rows
 
+base_rows = parse(BASELINE_CSV)
+opt_rows  = parse(OPTIMIZED_CSV)
 
-# Parse both CSVs
-baseline_rows = parse_results(BASELINE_CSV)
-optimized_rows = parse_results(OPTIMIZED_CSV)
-
-if not baseline_rows:
-    print('Error: No baseline results found. Run run_baseline_experiments.ps1 first.')
+if not base_rows and not opt_rows:
+    print('No data in either CSV. Run the experiment scripts first.')
     exit(1)
 
-if not optimized_rows:
-    print('Error: No optimized results found. Run run_optimized_experiments.ps1 first.')
-    exit(1)
-
-# Group by candidate size
-def group_by_size(rows):
-    by_size = collections.defaultdict(list)
+def group(rows):
+    d = collections.defaultdict(dict)
     for r in rows:
-        by_size[r['c']].append(r)
-    return by_size
+        d[r['c']][r['w']] = r
+    return d   # d[candidates][workers] = row
 
+base_by = group(base_rows)
+opt_by  = group(opt_rows)
 
-baseline_by_size = group_by_size(baseline_rows)
-optimized_by_size = group_by_size(optimized_rows)
+all_sizes   = sorted(set(base_by) | set(opt_by))
+all_workers = sorted(set(r['w'] for r in base_rows + opt_rows))
 
-os.makedirs(ROOT, exist_ok=True)
+print(f'Baseline  sizes : {sorted(base_by)}')
+print(f'Optimized sizes : {sorted(opt_by)}')
+print(f'Combined  sizes : {all_sizes}')
+print(f'Worker counts   : {all_workers}')
+print()
 
-# Generate overlay comparison plots for each candidate size
-for c in sorted(set(baseline_by_size.keys()) & set(optimized_by_size.keys())):
-    baseline_items = sorted(baseline_by_size[c], key=lambda x: x['w'])
-    optimized_items = sorted(optimized_by_size[c], key=lambda x: x['w'])
+# ── 2. Colour palette (one colour per candidate size) ─────────────────────────
+colours = plt.cm.tab10(np.linspace(0, 0.9, len(all_sizes)))
+colour_map = {c: colours[i] for i, c in enumerate(all_sizes)}
 
-    ws_base = [x['w'] for x in baseline_items]
-    Ss_base = [x['s'] for x in baseline_items]
-    Es_base = [x['e'] for x in baseline_items]
+# ── 3. Combined Speedup chart ─────────────────────────────────────────────────
+fig, ax = plt.subplots(figsize=(11, 6))
 
-    ws_opt = [x['w'] for x in optimized_items]
-    Ss_opt = [x['s'] for x in optimized_items]
-    Es_opt = [x['e'] for x in optimized_items]
+for c in all_sizes:
+    col   = colour_map[c]
+    label = f'{c:,} candidates'
 
-    # Overlaid Speedup comparison
-    plt.figure(figsize=(9, 5))
-    plt.plot(ws_base, Ss_base, marker='o', linewidth=2, markersize=8, color='red', label='Baseline (Fixed)')
-    plt.plot(ws_opt, Ss_opt, marker='s', linewidth=2, markersize=8, color='green', label='Optimized (Adaptive)')
-    plt.axhline(y=1.0, color='gray', linestyle='--', linewidth=1, alpha=0.5)
-    plt.title(f'Speedup Comparison (Candidates={c})', fontsize=12, fontweight='bold')
-    plt.xlabel('Workers (p)', fontsize=11)
-    plt.ylabel('Speedup S(p)', fontsize=11)
-    plt.grid(True, alpha=0.3)
-    plt.legend(fontsize=10)
-    plt.tight_layout()
-    plt.savefig(os.path.join(ROOT, f'comparison_speedup_overlay_{c}.png'), dpi=150)
-    plt.close()
+    if c in base_by:
+        ww = sorted(base_by[c])
+        ss = [base_by[c][w]['s'] for w in ww]
+        ax.plot(ww, ss, marker='o', linestyle='--', linewidth=1.8,
+                markersize=7, color=col, alpha=0.7,
+                label=f'{label}  Baseline')
 
-    # Overlaid Efficiency comparison
-    plt.figure(figsize=(9, 5))
-    plt.plot(ws_base, Es_base, marker='o', linewidth=2, markersize=8, color='red', label='Baseline (Fixed)')
-    plt.plot(ws_opt, Es_opt, marker='s', linewidth=2, markersize=8, color='green', label='Optimized (Adaptive)')
-    plt.axhline(y=1.0, color='gray', linestyle='--', linewidth=1, alpha=0.5)
-    plt.title(f'Efficiency Comparison (Candidates={c})', fontsize=12, fontweight='bold')
-    plt.xlabel('Workers (p)', fontsize=11)
-    plt.ylabel('Efficiency E(p) = S(p) / p', fontsize=11)
-    plt.grid(True, alpha=0.3)
-    plt.legend(fontsize=10)
-    plt.tight_layout()
-    plt.savefig(os.path.join(ROOT, f'comparison_efficiency_overlay_{c}.png'), dpi=150)
-    plt.close()
+    if c in opt_by:
+        ww = sorted(opt_by[c])
+        ss = [opt_by[c][w]['s'] for w in ww]
+        ax.plot(ww, ss, marker='s', linestyle='-', linewidth=2.2,
+                markersize=8, color=col,
+                label=f'{label}  Optimized')
 
-# Summary text
-summary_path = os.path.join(ROOT, 'optimization_summary.txt')
-with open(summary_path, 'w') as f:
-    f.write("=" * 70 + "\n")
-    f.write("Optimization Comparison: Baseline vs Adaptive Task Granularity\n")
-    f.write("=" * 70 + "\n\n")
+ax.axhline(1.0, color='#888', linestyle=':', linewidth=1.2, label='Speedup = 1')
+ax.set_title('Speedup: Baseline (--) vs Optimized (-)  |  All Candidate Sizes',
+             fontsize=13, fontweight='bold', pad=12)
+ax.set_xlabel('Workers', fontsize=11)
+ax.set_ylabel('Speedup  S = T_seq / T_par', fontsize=11)
+ax.set_xticks(all_workers)
+ax.grid(True, alpha=0.3)
+ax.legend(fontsize=8, ncol=2, loc='upper left', framealpha=0.9)
+fig.tight_layout()
+fig.savefig(os.path.join(PLOTS_DIR, 'speedup_comparison.png'), dpi=150)
+plt.close(fig)
+print('  [OK] speedup_comparison.png')
 
-    f.write("OPTIMIZATION DETAILS\n")
-    f.write("-" * 70 + "\n")
-    f.write("Name: Adaptive Task Granularity\n")
-    f.write("Baseline: Fixed chunk size (all chunks same size)\n")
-    f.write("Optimized: Dynamic chunk size (larger early, smaller late)\n")
-    f.write("  Formula: dynamicChunkSize = max(10, remaining / (workers * 2))\n")
-    f.write("  Benefit: Better load balance, reduces idle time\n\n")
+# ── 4. Combined Efficiency chart ───────────────────────────────────────────────
+fig, ax = plt.subplots(figsize=(11, 6))
 
-    f.write("RESULTS SUMMARY\n")
-    f.write("-" * 70 + "\n")
-    for c in sorted(set(baseline_by_size.keys()) & set(optimized_by_size.keys())):
-        f.write(f"\nCandidate Size: {c}\n")
-        baseline_items = sorted(baseline_by_size[c], key=lambda x: x['w'])
-        optimized_items = sorted(optimized_by_size[c], key=lambda x: x['w'])
+for c in all_sizes:
+    col   = colour_map[c]
+    label = f'{c:,} candidates'
 
-        f.write("Workers | Baseline Speedup | Optimized Speedup | Improvement\n")
-        for base_item, opt_item in zip(baseline_items, optimized_items):
-            base_s = base_item['s']
-            opt_s = opt_item['s']
-            improvement = ((opt_s - base_s) / base_s * 100) if base_s > 0 else 0
-            f.write(f"   {base_item['w']:2d}   |      {base_s:6.3f}      |      {opt_s:6.3f}      | {improvement:+6.1f}%\n")
+    if c in base_by:
+        ww = sorted(base_by[c])
+        ee = [base_by[c][w]['e'] for w in ww]
+        ax.plot(ww, ee, marker='o', linestyle='--', linewidth=1.8,
+                markersize=7, color=col, alpha=0.7,
+                label=f'{label}  Baseline')
 
-print("Comparison plots generated:")
-print("  - comparison_speedup_overlay_*.png (speedup overlay for each candidate size)")
-print("  - comparison_efficiency_overlay_*.png (efficiency overlay for each candidate size)")
-print("  - optimization_summary.txt (detailed metrics)")
-print("\nDone!")
+    if c in opt_by:
+        ww = sorted(opt_by[c])
+        ee = [opt_by[c][w]['e'] for w in ww]
+        ax.plot(ww, ee, marker='s', linestyle='-', linewidth=2.2,
+                markersize=8, color=col,
+                label=f'{label}  Optimized')
+
+ax.axhline(1.0, color='#888', linestyle=':', linewidth=1.2, label='Ideal (E=1)')
+ax.set_title('Efficiency: Baseline (--) vs Optimized (-)  |  All Candidate Sizes',
+             fontsize=13, fontweight='bold', pad=12)
+ax.set_xlabel('Workers', fontsize=11)
+ax.set_ylabel('Efficiency  E = S / p', fontsize=11)
+ax.set_xticks(all_workers)
+ax.grid(True, alpha=0.3)
+ax.legend(fontsize=8, ncol=2, loc='upper right', framealpha=0.9)
+fig.tight_layout()
+fig.savefig(os.path.join(PLOTS_DIR, 'efficiency_comparison.png'), dpi=150)
+plt.close(fig)
+print('  [OK] efficiency_comparison.png')
+
+# ── 5. Improvement bar chart ───────────────────────────────────────────────────
+# Only for (c, w) pairs that exist in BOTH files
+common = []
+for c in all_sizes:
+    for w in all_workers:
+        if c in base_by and w in base_by[c] and c in opt_by and w in opt_by[c]:
+            bs = base_by[c][w]['s']
+            os_ = opt_by[c][w]['s']
+            if bs > 0:
+                common.append((c, w, bs, os_, (os_ - bs) / bs * 100))
+
+if common:
+    labels  = [f'{c//1000}K\nw={w}' for c, w, *_ in common]
+    improve = [imp for *_, imp in common]
+    bar_colours = ['#27AE60' if v >= 0 else '#E74C3C' for v in improve]
+
+    fig, ax = plt.subplots(figsize=(max(8, len(labels) * 0.9 + 2), 5))
+    bars = ax.bar(labels, improve, color=bar_colours, edgecolor='white', linewidth=0.5)
+    ax.axhline(0, color='black', linewidth=0.8)
+
+    for bar, val in zip(bars, improve):
+        ax.text(bar.get_x() + bar.get_width() / 2,
+                bar.get_height() + (0.5 if val >= 0 else -1.5),
+                f'{val:+.1f}%', ha='center', va='bottom', fontsize=8, fontweight='bold')
+
+    ax.set_title('Speedup Improvement: Optimized vs Baseline  (+ = adaptive is faster)',
+                 fontsize=12, fontweight='bold', pad=10)
+    ax.set_xlabel('Candidates (K) / Workers', fontsize=10)
+    ax.set_ylabel('Speedup Improvement (%)', fontsize=10)
+    ax.grid(True, axis='y', alpha=0.3)
+    fig.tight_layout()
+    fig.savefig(os.path.join(PLOTS_DIR, 'improvement_bar.png'), dpi=150)
+    plt.close(fig)
+    print('  [OK] improvement_bar.png')
+else:
+    print('  [SKIP] improvement_bar — no overlapping (candidates, workers) between baseline and optimized.')
+
+# ── 6. Summary text ────────────────────────────────────────────────────────────
+summary_path = os.path.join(PLOTS_DIR, 'optimization_summary.txt')
+with open(summary_path, 'w', encoding='utf-8') as f:
+    sep = '=' * 72
+    f.write(sep + '\n')
+    f.write('Optimization Comparison: Baseline vs Adaptive Task Granularity\n')
+    f.write(sep + '\n\n')
+
+    f.write('OPTIMIZATION DETAILS\n')
+    f.write('-' * 72 + '\n')
+    f.write('Baseline : Fixed chunk size (every chunk = chunkSize candidates)\n')
+    f.write('Optimized: Dynamic chunk size  Formula: max(10, remaining / (workers*2))\n')
+    f.write('Benefit  : Larger chunks early (fewer round-trips) -> smaller chunks\n')
+    f.write('           late (finer load balance, fewer idle worker-cycles)\n\n')
+
+    f.write('RESULTS SUMMARY\n')
+    f.write('-' * 72 + '\n')
+
+    for c in all_sizes:
+        f.write(f'\nCandidate Size: {c:,}\n')
+        f.write(f"  {'Workers':>7} | {'Base Speedup':>13} | {'Opt Speedup':>12} | {'Improvement':>12}\n")
+        bw = base_by.get(c, {})
+        ow = opt_by.get(c,  {})
+        for w in sorted(set(bw) | set(ow)):
+            bs   = f"{bw[w]['s']:.3f}" if w in bw else 'N/A'
+            os_  = f"{ow[w]['s']:.3f}" if w in ow else 'N/A'
+            if w in bw and w in ow and bw[w]['s'] > 0:
+                imp = f"{(ow[w]['s'] - bw[w]['s']) / bw[w]['s'] * 100:+.1f}%"
+            else:
+                imp = 'N/A'
+            f.write(f"  {w:>7} | {bs:>13} | {os_:>12} | {imp:>12}\n")
+
+print()
+print(f'All output written to:  plots/')
+print(f'  speedup_comparison.png')
+print(f'  efficiency_comparison.png')
+if common:
+    print(f'  improvement_bar.png')
+print(f'  optimization_summary.txt')
+print('\nDone!')

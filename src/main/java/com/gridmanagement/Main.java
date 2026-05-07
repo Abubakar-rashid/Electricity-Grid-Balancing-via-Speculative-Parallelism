@@ -1,6 +1,8 @@
 package com.gridmanagement;
 
+import com.gridmanagement.grid.GridLoader;
 import com.gridmanagement.master.MasterNode;
+import com.gridmanagement.model.GridSnapshot;
 import com.gridmanagement.worker.WorkerNode;
 
 /**
@@ -69,18 +71,28 @@ public class Main {
                 int    candidates = intArg(args, 4, DEF_CANDIDATES);
                 int    chunkSize  = intArg(args, 5, DEF_CHUNK_SIZE);
                 int    port       = intArg(args, 6, DEF_PORT);
-                
-                // Check for --baseline flag to disable adaptive granularity
+
                 boolean adaptive = true;
+                String  gridFile = null;
                 for (String arg : args) {
-                    if ("--baseline".equals(arg)) {
-                        adaptive = false;
-                        break;
-                    }
+                    if ("--baseline".equals(arg))  adaptive = false;
+                    if (arg.startsWith("--grid-file=")) gridFile = arg.substring("--grid-file=".length());
+                    // also support  --grid-file path  (two-token form)
+                }
+                // two-token form: --grid-file <path>
+                for (int i = 0; i < args.length - 1; i++) {
+                    if ("--grid-file".equals(args[i])) { gridFile = args[i + 1]; break; }
                 }
 
-                new MasterNode(port, workers, candidates, chunkSize, adaptive)
-                        .run(nodes, edges);
+                MasterNode master = new MasterNode(port, workers, candidates, chunkSize, adaptive);
+
+                if (gridFile != null) {
+                    System.out.println("[MAIN] Loading custom grid from: " + gridFile);
+                    GridSnapshot customGrid = GridLoader.load(gridFile);
+                    master.run(customGrid);
+                } else {
+                    master.run(nodes, edges);
+                }
             }
 
             case "worker" -> {

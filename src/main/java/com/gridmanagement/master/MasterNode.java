@@ -102,7 +102,7 @@ public class MasterNode {
         this.totalChunks          = (int) Math.ceil((double) totalCandidates / chunkSize);
     }
 
-    // ── Public entry ──────────────────────────────────────────────────────
+    // ── Public entry (random grid) ──────────────────────────────────────────
 
     public void run(int nodeCount, int edgeCount) throws IOException, InterruptedException {
         banner();
@@ -110,26 +110,37 @@ public class MasterNode {
                           "  %d chunks of %d  port=%d%n",
                 nodeCount, edgeCount, totalCandidates, totalChunks, chunkSize, port);
 
-        // ── Step 1: Build grid ────────────────────────────────────────────
         System.out.println("[MASTER] Building grid...");
         long t0 = System.currentTimeMillis();
         grid = GridGenerator.generateGrid(nodeCount, edgeCount);
         System.out.printf("[MASTER] Grid built in %d ms%n",
                 System.currentTimeMillis() - t0);
 
-        // ── Step 1.5: Sequential Baseline ─────────────────────────────────
-        runSequentialBaseline();
+        runFromGrid();
+    }
 
-        // ── Step 2: Task preparation ──────────────────────────────────────
-        if (adaptiveGranularity) {
-            System.out.printf("[MASTER] Using Adaptive Task Granularity (Initial target chunks: %d)%n", totalChunks);
-        } else {
-            System.out.printf("[MASTER] Using Fixed Task Granularity (Chunk size: %d)%n", chunkSize);
-        }
+    // ── Public entry (custom / user-supplied grid) ─────────────────────────
 
-        // ── Step 3: Accept workers ────────────────────────────────────────
-        System.out.printf("[MASTER] Waiting for %d worker(s) on port %d...%n",
-                expectedWorkers, port);
+    /**
+     * Runs the optimisation on a pre-loaded {@link GridSnapshot} (e.g. from a
+     * user-defined JSON file via {@link com.gridmanagement.grid.GridLoader}).
+     */
+    public void run(GridSnapshot prebuilt) throws IOException, InterruptedException {
+        banner();
+        System.out.printf("[MASTER] Custom grid: %d nodes  %d edges  %d candidates" +
+                          "  port=%d%n",
+                prebuilt.nodeCount, prebuilt.edgeCount, totalCandidates, port);
+        grid = prebuilt;
+        runFromGrid();
+    }
+
+    // ── Shared run logic ───────────────────────────────────────────────────
+
+    private void runFromGrid() throws IOException, InterruptedException {
+        //    Workers must connect before we start the baseline so they
+        //    don't hit "Connection refused" during the baseline window.
+        System.out.printf("[MASTER] Opening server socket on port %d — waiting for %d worker(s)...%n",
+                port, expectedWorkers);
         try (ServerSocket ss = new ServerSocket(port)) {
             ss.setReuseAddress(true);
             for (int i = 0; i < expectedWorkers; i++) {
@@ -143,6 +154,14 @@ public class MasterNode {
                         i + 1, expectedWorkers,
                         socket.getInetAddress().getHostAddress());
             }
+
+            // ── Step 3: Sequential Baseline (workers idle, waiting for GRID_INIT)
+            if (adaptiveGranularity) {
+                System.out.printf("[MASTER] Using Adaptive Task Granularity (Initial target chunks: %d)%n", totalChunks);
+            } else {
+                System.out.printf("[MASTER] Using Fixed Task Granularity (Chunk size: %d)%n", chunkSize);
+            }
+            runSequentialBaseline();
 
             // ── Step 4: Broadcast GRID_INIT ───────────────────────────────
             evalStartTime = System.currentTimeMillis();
@@ -172,18 +191,24 @@ public class MasterNode {
     }
 
     private void runSequentialBaseline() {
-        System.out.println("[MASTER] Running Sequential Baseline...");
+        System.out.printf("[MASTER] Running Sequential Baseline (%d candidates)...%n", totalCandidates);
         long t0 = System.currentTimeMillis();
+        int reportInterval = Math.max(1, totalCandidates / 10);
         for (int id = 0; id < totalCandidates; id++) {
             RouteCandidate candidate = GridGenerator.generateCandidate(grid, id);
             RouteResult r = CandidateEvaluator.evaluate(grid, candidate, 0);
             if (r.costScore < seqBest.costScore) {
                 seqBest = r;
             }
+            if ((id + 1) % reportInterval == 0 || id == totalCandidates - 1) {
+                System.out.printf("[MASTER] Sequential baseline: %d / %d (%.0f%%)%n",
+                        id + 1, totalCandidates, 100.0 * (id + 1) / totalCandidates);
+            }
         }
         seqTimeMs = System.currentTimeMillis() - t0;
-        System.out.printf("[MASTER] Sequential Baseline Complete in %d ms%n", seqTimeMs);
-        System.out.printf("[MASTER] Sequential Best Cost: %.2f (Candidate #%d)%n", seqBest.costScore, seqBest.candidateId);
+        System.out.printf("[MASTER] Sequential Baseline complete in %d ms%n", seqTimeMs);
+        System.out.printf("[MASTER] Sequential Best Cost: %.4f (Candidate #%d)%n",
+                seqBest.costScore, seqBest.candidateId);
     }
 
     // ── Callbacks invoked by WorkerProxy threads ──────────────────────────
@@ -295,15 +320,19 @@ public class MasterNode {
                 amdahlMax);
         System.out.println("╚" + line + "╝\n");
 
-        try (FileWriter fw = new FileWriter("results.csv", true)) {
-            File fcsv = new File("results.csv");
-            if (fcsv.length() == 0) {
+        // Use the process working directory so the file always lands next to the scripts
+        String csvPath = System.getProperty("user.dir") + java.io.File.separator + "results.csv";
+        File fcsv = new File(csvPath);
+        boolean needsHeader = !fcsv.exists() || fcsv.length() == 0;
+        try (FileWriter fw = new FileWriter(fcsv, true)) {
+            if (needsHeader) {
                 fw.write("Workers,Candidates,T_seq(ms),T_par(ms),Speedup,Efficiency,ParallelFraction,Correctness\n");
             }
-            fw.write(String.format("%d,%d,%d,%d,%.2f,%.2f,%.2f,%b\n",
+            fw.write(String.format("%d,%d,%d,%d,%.2f,%.2f,%.2f,%b%n",
                     expectedWorkers, totalCandidates, seqTimeMs, totalMs, speedup, efficiency, f, correctness));
+            System.out.println("[MASTER] Results saved to: " + fcsv.getAbsolutePath());
         } catch (IOException e) {
-            System.err.println("Failed to write results.csv: " + e.getMessage());
+            System.err.println("[MASTER] Failed to write results.csv: " + e.getMessage());
         }
     }
 

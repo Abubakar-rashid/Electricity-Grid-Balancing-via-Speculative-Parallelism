@@ -11,11 +11,15 @@ import collections
 import math
 import os
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-ROOT = os.path.dirname(__file__)
-CSV = os.path.join(ROOT, 'results.csv')
-WEAK_CSV = os.path.join(ROOT, 'weak_results.csv')
+ROOT      = os.path.dirname(os.path.abspath(__file__))
+CSV       = os.path.join(ROOT, 'results.csv')
+WEAK_CSV  = os.path.join(ROOT, 'weak_results.csv')
+PLOTS_DIR = os.path.join(ROOT, 'plots')
+os.makedirs(PLOTS_DIR, exist_ok=True)
 
 def parse_results(path):
     rows = []
@@ -54,7 +58,7 @@ by_workers = collections.defaultdict(list)
 for r in rows:
     by_workers[r['w']].append(r)
 
-os.makedirs(ROOT, exist_ok=True)
+os.makedirs(PLOTS_DIR, exist_ok=True)
 
 # --- Strong Scaling: Speedup & Efficiency vs Worker Count (per candidate size) ---
 strong_scaling_curves = []
@@ -77,7 +81,7 @@ for c, items in sorted(by_size.items()):
     plt.xticks(ws)
     plt.legend()
     plt.tight_layout()
-    plt.savefig(os.path.join(ROOT, f'speedup_{c}.png'), dpi=150)
+    plt.savefig(os.path.join(PLOTS_DIR, f'speedup_{c}.png'), dpi=150)
     plt.close()
 
     # Plot Efficiency
@@ -91,7 +95,7 @@ for c, items in sorted(by_size.items()):
     plt.xticks(ws)
     plt.legend()
     plt.tight_layout()
-    plt.savefig(os.path.join(ROOT, f'efficiency_{c}.png'), dpi=150)
+    plt.savefig(os.path.join(PLOTS_DIR, f'efficiency_{c}.png'), dpi=150)
     plt.close()
 
     # Compute Amdahl f for each p (skip p=1)
@@ -105,8 +109,7 @@ for c, items in sorted(by_size.items()):
         f_vals.append(f)
 
     # Save summary text
-    out = os.path.join(ROOT, f'summary_{c}.txt')
-    with open(out, 'w') as fo:
+    with open(os.path.join(PLOTS_DIR, f'summary_{c}.txt'), 'w') as fo:
         fo.write(f'Candidates: {c}\n')
         fo.write('p,S(p),E(p),f_est\n')
         for i, x in enumerate(items_sorted):
@@ -128,7 +131,7 @@ if strong_scaling_curves:
     plt.grid(True, alpha=0.3)
     plt.legend()
     plt.tight_layout()
-    plt.savefig(os.path.join(ROOT, 'strong_scaling_overview.png'), dpi=150)
+    plt.savefig(os.path.join(PLOTS_DIR, 'strong_scaling_overview.png'), dpi=150)
     plt.close()
 
 if weak_rows:
@@ -151,7 +154,7 @@ if weak_rows:
     plt.xticks(ws)
     plt.legend()
     plt.tight_layout()
-    plt.savefig(os.path.join(ROOT, 'weak_scaling.png'), dpi=150)
+    plt.savefig(os.path.join(PLOTS_DIR, 'weak_scaling.png'), dpi=150)
     plt.close()
 
     plt.figure(figsize=(8, 5))
@@ -164,7 +167,7 @@ if weak_rows:
     plt.xticks(ws)
     plt.legend()
     plt.tight_layout()
-    plt.savefig(os.path.join(ROOT, 'weak_scaling_normalized.png'), dpi=150)
+    plt.savefig(os.path.join(PLOTS_DIR, 'weak_scaling_normalized.png'), dpi=150)
     plt.close()
 
 # --- Amdahl's Law Comparison (per candidate size) ---
@@ -202,10 +205,10 @@ for c, items in sorted(by_size.items()):
     plt.xticks(ws)
     plt.legend()
     plt.tight_layout()
-    plt.savefig(os.path.join(ROOT, f'amdahl_{c}.png'), dpi=150)
+    plt.savefig(os.path.join(PLOTS_DIR, f'amdahl_{c}.png'), dpi=150)
     plt.close()
 
-print('All plots and summaries written to repository root.')
+print(f'All plots and summaries written to: plots/')
 print('Generated:')
 print('  - speedup_*.png, efficiency_*.png (strong scaling)')
 print('  - strong_scaling_overview.png (combined strong scaling, if multiple points exist)')

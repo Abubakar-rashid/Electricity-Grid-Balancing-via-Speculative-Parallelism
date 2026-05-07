@@ -107,8 +107,8 @@ public class WorkerProxy implements Runnable {
      * interleave writes on the same socket output stream.
      */
     public synchronized void send(Message msg) {
-        writer.print(msg.serialize());
-        writer.flush();
+        // println triggers PrintWriter auto-flush; stripTrailing removes the \n in serialize()
+        writer.println(msg.serialize().stripTrailing());
     }
 
     public int getWorkerId() { return workerId; }

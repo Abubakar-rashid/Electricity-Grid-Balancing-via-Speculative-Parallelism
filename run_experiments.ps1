@@ -1,57 +1,130 @@
-<#
-Automate experiments by running `run.ps1` for multiple worker counts
-and candidate sizes. Each run appends to `results.csv`.
-
-Usage: .\run_experiments.ps1
-#>
+# PDC Grid Management - Automated Experiment Runner
+# Runs multiple (workers x candidates) combinations and accumulates results.csv
+#
+# Usage:  .\run_experiments.ps1
+# Output: results.csv in project root
 
 param(
-    [string]$WorkersStr = "1,2,4",
+    [string]$WorkersStr    = "1,2,4",
     [string]$CandidatesStr = "1000,5000,10000",
-    [int]$Nodes = 500,
-    [int]$Edges = 1000,
-    [int]$ChunkSize = 100,
-    [int]$Port = 9099
+    [int]$Nodes      = 500,
+    [int]$Edges      = 1000,
+    [int]$ChunkSize  = 100,
+    [int]$Port       = 9090
 )
 
 Set-Location $PSScriptRoot
+$ErrorActionPreference = "Stop"
 
-# Parse comma-separated worker and candidate lists
-$WorkersList = @($WorkersStr -split ',' | ForEach-Object { [int]$_ })
-$CandidatesList = @($CandidatesStr -split ',' | ForEach-Object { [int]$_ })
+# ── Build once ─────────────────────────────────────────────────────────────────
+Write-Host "[BUILD] Compiling with Maven..." -ForegroundColor Yellow
+mvn package -q -DskipTests
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "[ERROR] Maven build failed." -ForegroundColor Red; exit 1
+}
+Write-Host "[BUILD] Build successful." -ForegroundColor Green
 
-# Backup existing results.csv if present
+$CLASSES = Join-Path $PSScriptRoot 'target\classes'
+# Quoted path to handle spaces (e.g. '6th semester')
+$Q = "`"$CLASSES`""
+
+$WorkersList     = @($WorkersStr    -split ',' | ForEach-Object { [int]$_ })
+$CandidatesList  = @($CandidatesStr -split ',' | ForEach-Object { [int]$_ })
+
+# Backup + clear existing results
 if (Test-Path results.csv) {
     $ts = Get-Date -Format "yyyyMMdd-HHmmss"
     Copy-Item results.csv "results.$ts.bak.csv"
-    Write-Host "Backed up existing results.csv to results.$ts.bak.csv" -ForegroundColor Yellow
+    Write-Host "[INFO] Backed up existing results.csv -> results.$ts.bak.csv" -ForegroundColor Yellow
     Remove-Item results.csv -Force
 }
 
-# Write header
-"Workers,Candidates,T_seq(ms),T_par(ms),Speedup,Efficiency,ParallelFraction,Correctness" | Out-File -FilePath results.csv -Encoding ascii
-Write-Host "Starting experiments ($($WorkersList.Count) worker counts x $($CandidatesList.Count) sizes)..." -ForegroundColor Green
-
 $totalRuns = $WorkersList.Count * $CandidatesList.Count
-$runCount = 0
+$runCount  = 0
+
+Write-Host "Starting $totalRuns experiment run(s)..." -ForegroundColor Green
+Write-Host ""
 
 foreach ($c in $CandidatesList) {
     foreach ($w in $WorkersList) {
         $runCount++
-        Write-Host "[$runCount/$totalRuns] Running: workers=$w candidates=$c" -ForegroundColor Cyan
-        
-        # Run the launcher; it appends to results.csv and waits for completion
-        & powershell -NoProfile -ExecutionPolicy Bypass -File .\run.ps1 `
-            -Workers $w -Candidates $c -Nodes $Nodes -Edges $Edges -ChunkSize $ChunkSize -Port $Port
-        
-        if ($LASTEXITCODE -ne 0) {
-            Write-Host "Warning: run.ps1 exited with code $LASTEXITCODE" -ForegroundColor Yellow
+        Write-Host "──────────────────────────────────────────" -ForegroundColor DarkCyan
+        Write-Host "[$runCount/$totalRuns]  workers=$w  candidates=$c" -ForegroundColor Cyan
+        Write-Host "──────────────────────────────────────────" -ForegroundColor DarkCyan
+
+        # Per-run log files
+        $masterLog = Join-Path $PSScriptRoot "master.log"
+        $null      = New-Item -Path $masterLog -ItemType File -Force
+
+        # Launch master
+        $masterArgs = @('-cp', $Q, 'com.gridmanagement.Main',
+                        'master', $w, $Nodes, $Edges, $c, $ChunkSize, $Port)
+        $masterJob = Start-Process `
+            -FilePath 'java' `
+            -ArgumentList $masterArgs `
+            -WorkingDirectory $PSScriptRoot `
+            -RedirectStandardOutput $masterLog `
+            -RedirectStandardError  "$PSScriptRoot\master_err.log" `
+            -NoNewWindow `
+            -PassThru
+
+        Start-Sleep -Milliseconds 2000
+
+        # Launch workers
+        $workerProcs = @()
+        for ($i = 1; $i -le $w; $i++) {
+            $wLog = Join-Path $PSScriptRoot "worker_$i.log"
+            $null = New-Item -Path $wLog -ItemType File -Force
+            $workerArgs = @('-cp', $Q, 'com.gridmanagement.Main',
+                            'worker', $i, 'localhost', $Port)
+            $p = Start-Process `
+                -FilePath 'java' `
+                -ArgumentList $workerArgs `
+                -WorkingDirectory $PSScriptRoot `
+                -RedirectStandardOutput $wLog `
+                -RedirectStandardError  "$PSScriptRoot\worker_${i}_err.log" `
+                -NoNewWindow `
+                -PassThru
+            $workerProcs += $p
+            Start-Sleep -Milliseconds 300
         }
-        
+
+        # Tail master log
+        $lastLine = 0
+        while (-not $masterJob.HasExited) {
+            Start-Sleep -Milliseconds 500
+            $lines = Get-Content $masterLog -ErrorAction SilentlyContinue
+            if ($lines -and $lines.Count -gt $lastLine) {
+                $lines[$lastLine..($lines.Count - 1)] | ForEach-Object { Write-Host "  $_" }
+                $lastLine = $lines.Count
+            }
+        }
+        # Flush remaining
+        Start-Sleep -Milliseconds 200
+        $lines = Get-Content $masterLog -ErrorAction SilentlyContinue
+        if ($lines -and $lines.Count -gt $lastLine) {
+            $lines[$lastLine..($lines.Count - 1)] | ForEach-Object { Write-Host "  $_" }
+        }
+
+        # Wait for workers
+        $workerProcs | ForEach-Object {
+            $_.WaitForExit(10000) | Out-Null
+            $_ | Stop-Process -Force -ErrorAction SilentlyContinue
+        }
+
         Start-Sleep -Seconds 1
+        Write-Host ""
     }
 }
 
 Write-Host ""
-Write-Host "All experiments completed. Results saved in results.csv" -ForegroundColor Green
-Write-Host "Next: run 'python plot_results.py' to generate speedup/efficiency plots." -ForegroundColor Cyan
+Write-Host "All $totalRuns runs complete." -ForegroundColor Green
+Write-Host ""
+if (Test-Path results.csv) {
+    Write-Host "==== results.csv ====" -ForegroundColor Green
+    Get-Content results.csv | ForEach-Object { Write-Host $_ }
+    Write-Host ""
+    Write-Host "Run: python plot_results.py  to generate speedup/efficiency charts." -ForegroundColor Cyan
+} else {
+    Write-Host "[WARN] results.csv was not created. Check master.log for errors." -ForegroundColor Yellow
+}

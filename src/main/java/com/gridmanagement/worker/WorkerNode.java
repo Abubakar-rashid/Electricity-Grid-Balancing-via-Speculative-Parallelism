@@ -271,8 +271,8 @@ public class WorkerNode implements Runnable {
     // ── Helpers ───────────────────────────────────────────────────────────
 
     private synchronized void send(Message msg) {
-        writer.print(msg.serialize());
-        writer.flush();
+        // println triggers PrintWriter auto-flush; stripTrailing removes the \n in serialize()
+        writer.println(msg.serialize().stripTrailing());
     }
 
     private void shutdownPool() {
