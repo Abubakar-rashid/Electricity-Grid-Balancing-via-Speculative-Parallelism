@@ -31,13 +31,18 @@ function fmt(value) {
 }
 
 function renderSummary(summary) {
+  if (!summary) {
+    summaryCardsEl.innerHTML = '<div class="command-placeholder">No run completed yet.</div>';
+    return;
+  }
+
   summaryCardsEl.innerHTML = [
-    { label: 'Global Optimum', value: summary?.globalOptimum !== null ? `#${summary.globalOptimum}` : '—' },
-    { label: 'Cost Score', value: summary?.costScore !== null ? summary.costScore.toLocaleString(undefined, { maximumFractionDigits: 2 }) : '—' },
-    { label: 'Workers', value: summary?.workers ?? '—' },
-    { label: 'Chunks Done', value: summary?.chunksDone ?? '—' },
-    { label: 'Feasible', value: summary?.feasible === null ? '—' : String(summary.feasible) },
-    { label: 'Found By', value: summary?.foundByWorker !== null ? `Worker ${summary.foundByWorker}` : '—' },
+    { label: 'Global Optimum', value: summary.globalOptimum !== null ? `#${summary.globalOptimum}` : '—' },
+    { label: 'Cost Score', value: summary.costScore !== null ? summary.costScore.toLocaleString(undefined, { maximumFractionDigits: 2 }) : '—' },
+    { label: 'Workers', value: summary.workers ?? '—' },
+    { label: 'Chunks Done', value: summary.chunksDone ?? '—' },
+    { label: 'Feasible', value: summary.feasible === null ? '—' : String(summary.feasible) },
+    { label: 'Found By', value: summary.foundByWorker !== null ? `Worker ${summary.foundByWorker}` : '—' },
   ].map(({ label, value }) => `
     <div class="metric">
       <div class="card-label">${label}</div>

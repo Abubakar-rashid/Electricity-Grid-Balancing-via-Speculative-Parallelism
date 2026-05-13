@@ -248,14 +248,18 @@ function buildCommandString(config) {
 }
 
 async function runPhase(label, config) {
-  const command = buildCommandString(config);
+  // Find an available port for the master-worker communication
+  const actualPort = await findAvailablePort(config.port);
+  const phaseConfig = { ...config, port: actualPort };
+  
+  const command = buildCommandString(phaseConfig);
   const stageStartIndex = state.logs.length;
   state.phase = label;
-  state.runCommands.push({ label, command, config });
+  state.runCommands.push({ label, command, config: phaseConfig });
   addLog('dashboard', `[${label}] Command: ${command}`);
-  addLog('dashboard', `[${label}] Starting master for ${config.workers} worker(s)`);
+  addLog('dashboard', `[${label}] Starting master for ${phaseConfig.workers} worker(s) on port ${actualPort}`);
 
-  const masterArgs = ['-jar', jarPath, 'master', String(config.workers), String(config.nodes), String(config.edges), String(config.candidates), String(config.chunkSize), String(config.port)];
+  const masterArgs = ['-jar', jarPath, 'master', String(phaseConfig.workers), String(phaseConfig.nodes), String(phaseConfig.edges), String(phaseConfig.candidates), String(phaseConfig.chunkSize), String(actualPort)];
   // When the dashboard spawns the master, avoid polluting the repo-level
   // `results.csv` file — tell the Java process to skip writing it.
   const master = startProcess('java', masterArgs, `${label}-master`, { SKIP_RESULTS_CSV: '1' });
@@ -264,8 +268,8 @@ async function runPhase(label, config) {
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const workers = [];
-  for (let workerId = 1; workerId <= config.workers; workerId += 1) {
-    const workerArgs = ['-jar', jarPath, 'worker', String(workerId), 'localhost', String(config.port)];
+  for (let workerId = 1; workerId <= phaseConfig.workers; workerId += 1) {
+    const workerArgs = ['-jar', jarPath, 'worker', String(workerId), 'localhost', String(actualPort)];
     const worker = startProcess('java', workerArgs, `${label}-worker-${workerId}`);
     workers.push(worker);
   }
@@ -323,7 +327,7 @@ async function runPhase(label, config) {
 
   const summary = {
     ...parsed,
-    config,
+    config: phaseConfig,
     label,
     command,
   };
