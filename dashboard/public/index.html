@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grid Simulation Dashboard</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Electricity Grid Balancing</p>
+        <h1>Simulation Dashboard</h1>
+        <p class="lede">Launch the master-worker run, inspect live logs, compare result sets, and visualize the sample grid.</p>
+      </div>
+      <div class="hero-card">
+        <div><span>Mode</span><strong>Local control</strong></div>
+        <div><span>Stack</span><strong>Static UI + Node bridge</strong></div>
+        <div><span>Status</span><strong id="statusText">Idle</strong></div>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="panel form-panel">
+        <h2>Run Configuration</h2>
+        <form id="runForm">
+          <label>Workers <input name="workers" type="number" value="8" min="1" /></label>
+          <label>Nodes <input name="nodes" type="number" value="500" min="1" /></label>
+          <label>Edges <input name="edges" type="number" value="1000" min="1" /></label>
+          <label>Candidates <input name="candidates" type="number" value="10000" min="1" /></label>
+          <label>Chunk Size <input name="chunkSize" type="number" value="500" min="1" /></label>
+          <label>Port <input name="port" type="number" value="9090" min="1" /></label>
+          <div class="actions">
+            <button type="submit" class="primary">Start Run</button>
+            <button type="button" id="stopBtn">Stop</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel summary-panel">
+        <h2>Results Summary</h2>
+        <div class="cards" id="summaryCards"></div>
+        <div class="chart-block">
+          <h3>Run Commands</h3>
+          <div id="commandStack" class="command-stack"></div>
+        </div>
+        <div class="chart-block">
+          <h3>Baseline vs Parallel</h3>
+          <div id="comparisonCard" class="comparison-card"></div>
+        </div>
+        <div class="chart-block">
+          <h3>Selected Config Details</h3>
+          <p class="section-note">The current solver assigns power flows in MW across edges. This panel shows the chosen candidate, node demand/setup, and the edge flow assignment used for the run.</p>
+          <div id="runDetailsCard" class="run-details-card"></div>
+        </div>
+      </section>
+
+      <section class="panel logs-panel">
+        <h2>Live Logs</h2>
+        <pre id="logs" class="logs"></pre>
+      </section>
+
+      <section class="panel table-panel">
+        <h2>Comparison Table</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Candidates</th><th>Workers</th><th>Seq ms</th><th>Par ms</th><th>Speedup</th><th>Correct</th></tr>
+            </thead>
+            <tbody id="resultTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel grid-panel">
+        <h2>Sample Grid</h2>
+        <svg id="gridSvg" viewBox="0 0 800 420" preserveAspectRatio="xMidYMid meet"></svg>
+      </section>
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

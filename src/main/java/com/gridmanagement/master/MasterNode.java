@@ -2,6 +2,7 @@ package com.gridmanagement.master;
 
 import com.gridmanagement.grid.GridGenerator;
 import com.gridmanagement.model.GridSnapshot;
+import com.gridmanagement.model.RouteCandidate;
 import com.gridmanagement.model.RouteResult;
 import com.gridmanagement.protocol.Message;
 
@@ -18,7 +19,9 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.io.FileWriter;
 import java.io.File;
 import com.gridmanagement.grid.CandidateEvaluator;
-import com.gridmanagement.model.RouteCandidate;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Locale;
 
 /**
  * Master node — coordinates the distributed power-flow optimisation.
@@ -320,20 +323,139 @@ public class MasterNode {
                 amdahlMax);
         System.out.println("╚" + line + "╝\n");
 
+        writeRunDetails(best, totalMs);
+
         // Use the process working directory so the file always lands next to the scripts
-        String csvPath = System.getProperty("user.dir") + java.io.File.separator + "results.csv";
-        File fcsv = new File(csvPath);
-        boolean needsHeader = !fcsv.exists() || fcsv.length() == 0;
-        try (FileWriter fw = new FileWriter(fcsv, true)) {
-            if (needsHeader) {
-                fw.write("Workers,Candidates,T_seq(ms),T_par(ms),Speedup,Efficiency,ParallelFraction,Correctness\n");
+        // Allow callers (e.g. the dashboard) to opt-out of persisting results by
+        // setting the SKIP_RESULTS_CSV environment variable to "1"/"true".
+        String skip = System.getenv("SKIP_RESULTS_CSV");
+        boolean skipCsv = skip != null && (skip.equalsIgnoreCase("1") || skip.equalsIgnoreCase("true") || skip.equalsIgnoreCase("yes"));
+        if (skipCsv) {
+            System.out.println("[MASTER] SKIPPING write to results.csv due to SKIP_RESULTS_CSV env var.");
+        } else {
+            String csvPath = System.getProperty("user.dir") + java.io.File.separator + "results.csv";
+            File fcsv = new File(csvPath);
+            boolean needsHeader = !fcsv.exists() || fcsv.length() == 0;
+            try (FileWriter fw = new FileWriter(fcsv, true)) {
+                if (needsHeader) {
+                    fw.write("Workers,Candidates,T_seq(ms),T_par(ms),Speedup,Efficiency,ParallelFraction,Correctness\n");
+                }
+                fw.write(String.format("%d,%d,%d,%d,%.2f,%.2f,%.2f,%b%n",
+                        expectedWorkers, totalCandidates, seqTimeMs, totalMs, speedup, efficiency, f, correctness));
+                System.out.println("[MASTER] Results saved to: " + fcsv.getAbsolutePath());
+            } catch (IOException e) {
+                System.err.println("[MASTER] Failed to write results.csv: " + e.getMessage());
             }
-            fw.write(String.format("%d,%d,%d,%d,%.2f,%.2f,%.2f,%b%n",
-                    expectedWorkers, totalCandidates, seqTimeMs, totalMs, speedup, efficiency, f, correctness));
-            System.out.println("[MASTER] Results saved to: " + fcsv.getAbsolutePath());
-        } catch (IOException e) {
-            System.err.println("[MASTER] Failed to write results.csv: " + e.getMessage());
         }
+    }
+
+    private void writeRunDetails(RouteResult best, long totalMs) {
+        String detailsPath = System.getProperty("user.dir") + java.io.File.separator + "run_details.json";
+        try {
+            String json = buildRunDetailsJson(best, totalMs);
+            Files.writeString(Path.of(detailsPath), json);
+            System.out.println("[MASTER] Run details saved to: " + detailsPath);
+        } catch (IOException e) {
+            System.err.println("[MASTER] Failed to write run_details.json: " + e.getMessage());
+        }
+    }
+
+    private String buildRunDetailsJson(RouteResult best, long totalMs) {
+        RouteCandidate candidate = GridGenerator.generateCandidate(grid, best.candidateId);
+        StringBuilder sb = new StringBuilder(64_000);
+        sb.append('{');
+
+        sb.append("\"config\":{");
+        appendIntField(sb, "workers", expectedWorkers).append(',');
+        appendIntField(sb, "nodes", grid.nodeCount).append(',');
+        appendIntField(sb, "edges", grid.edgeCount).append(',');
+        appendIntField(sb, "candidates", totalCandidates).append(',');
+        appendIntField(sb, "chunkSize", chunkSize).append(',');
+        appendIntField(sb, "port", port);
+        sb.append("},");
+
+        sb.append("\"summary\":{");
+        appendIntField(sb, "candidateId", best.candidateId).append(',');
+        appendDoubleField(sb, "costScore", best.costScore).append(',');
+        appendBooleanField(sb, "feasible", best.feasible).append(',');
+        appendIntField(sb, "workerId", best.workerId).append(',');
+        appendLongField(sb, "evalTimeMs", best.evalTimeMs).append(',');
+        appendLongField(sb, "seqTimeMs", seqTimeMs).append(',');
+        appendLongField(sb, "parTimeMs", totalMs).append(',');
+        appendDoubleField(sb, "speedup", seqTimeMs == 0 || totalMs == 0 ? 0.0 : (double) seqTimeMs / totalMs);
+        sb.append("},");
+
+        sb.append("\"nodes\":[");
+        for (int i = 0; i < grid.nodeCount; i++) {
+            if (i > 0) sb.append(',');
+            double nodeFlow = 0.0;
+            for (int e = 0; e < grid.edgeCount; e++) {
+                if (grid.edges[e][0] == i) nodeFlow -= candidate.flowPerEdge[e];
+                if (grid.edges[e][1] == i) nodeFlow += candidate.flowPerEdge[e];
+            }
+
+            int generatorIndex = -1;
+            for (int g = 0; g < grid.generatorNodes.length; g++) {
+                if (grid.generatorNodes[g] == i) {
+                    generatorIndex = g;
+                    break;
+                }
+            }
+
+            sb.append('{');
+            appendIntField(sb, "id", i).append(',');
+            appendIntField(sb, "demand", grid.demand[i]).append(',');
+            appendDoubleField(sb, "netFlowMw", nodeFlow);
+            if (generatorIndex >= 0) {
+                sb.append(',');
+                appendIntField(sb, "generatorOutput", grid.generatorOutput[generatorIndex]).append(',');
+                appendIntField(sb, "generatorCapacity", grid.generatorCapacity[generatorIndex]);
+            }
+            sb.append('}');
+        }
+        sb.append("],");
+
+        sb.append("\"edges\":[");
+        for (int i = 0; i < grid.edgeCount; i++) {
+            if (i > 0) sb.append(',');
+            sb.append('{');
+            appendIntField(sb, "id", i).append(',');
+            appendIntField(sb, "from", grid.edges[i][0]).append(',');
+            appendIntField(sb, "to", grid.edges[i][1]).append(',');
+            appendIntField(sb, "capacity", grid.edges[i][2]).append(',');
+            appendIntField(sb, "impedance", grid.edges[i][3]).append(',');
+            appendDoubleField(sb, "flowMw", candidate.flowPerEdge[i]);
+            sb.append('}');
+        }
+        sb.append("],");
+
+        sb.append("\"candidate\":{");
+        appendIntField(sb, "candidateId", candidate.candidateId).append(',');
+        sb.append("\"flowPerEdge\":[");
+        for (int i = 0; i < candidate.flowPerEdge.length; i++) {
+            if (i > 0) sb.append(',');
+            sb.append(String.format(Locale.US, "%.6f", candidate.flowPerEdge[i]));
+        }
+        sb.append("]}");
+
+        sb.append('}');
+        return sb.toString();
+    }
+
+    private static StringBuilder appendIntField(StringBuilder sb, String name, int value) {
+        return sb.append('"').append(name).append("\":").append(value);
+    }
+
+    private static StringBuilder appendLongField(StringBuilder sb, String name, long value) {
+        return sb.append('"').append(name).append("\":").append(value);
+    }
+
+    private static StringBuilder appendDoubleField(StringBuilder sb, String name, double value) {
+        return sb.append('"').append(name).append("\":").append(String.format(Locale.US, "%.6f", value));
+    }
+
+    private static StringBuilder appendBooleanField(StringBuilder sb, String name, boolean value) {
+        return sb.append('"').append(name).append("\":").append(value);
     }
 
     private static void banner() {

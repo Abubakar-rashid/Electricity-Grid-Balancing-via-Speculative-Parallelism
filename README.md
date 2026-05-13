@@ -31,6 +31,7 @@ The implementation is designed to answer two questions:
 - [src/main/java/com/gridmanagement/protocol/](src/main/java/com/gridmanagement/protocol/) - message definitions and serialization
 - [results.csv](results.csv) and related CSV files - benchmark outputs
 - [plots/](plots/) - generated charts and summary text files
+- [dashboard/](dashboard/) - local browser UI for launching runs and viewing results
 
 ## Build
 
@@ -111,6 +112,21 @@ The master writes result summaries to CSV after a run completes. The repo keeps 
 - `weak_results.csv`
 
 The `plots/` directory contains generated graphs and short text summaries that document the observed speedup, efficiency, weak scaling, and optimization impact.
+
+## Frontend Dashboard
+
+The repository now includes a local browser dashboard in [dashboard/](dashboard/). It provides a run configuration form, live log streaming, a comparison table, simple speedup bars, and a visual preview of [sample_grid.json](sample_grid.json).
+
+To start it:
+
+```powershell
+cd dashboard
+npm start
+```
+
+Open `http://localhost:4173` in your browser. The dashboard expects the Java project to be built first so it can launch the shaded JAR from `target/`.
+
+The first implementation is intentionally lightweight and local. It uses a small Node-based bridge to start the existing master and worker processes, so the core simulation code stays unchanged.
 
 ## Notes
 
