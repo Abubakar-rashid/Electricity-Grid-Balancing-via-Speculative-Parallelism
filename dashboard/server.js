@@ -305,13 +305,20 @@ async function runPhase(label, config) {
     parsed.seqTimeMs = details.summary.seqTimeMs ?? parsed.seqTimeMs;
   }
 
-  // Ensure a canonical `totalTimeMs` is present for the UI: prefer already
-  // parsed `totalTimeMs`, fall back to `parTimeMs`, then `seqTimeMs`.
-  if ((parsed.totalTimeMs === null || parsed.totalTimeMs === undefined) && parsed.parTimeMs != null) {
+  // For phase summaries, always use parTimeMs as the canonical totalTimeMs
+  // (it represents the actual wall-clock time for that phase).
+  if (parsed.parTimeMs != null) {
     parsed.totalTimeMs = parsed.parTimeMs;
-  }
-  if ((parsed.totalTimeMs === null || parsed.totalTimeMs === undefined) && parsed.seqTimeMs != null) {
+  } else if ((parsed.totalTimeMs === null || parsed.totalTimeMs === undefined) && parsed.seqTimeMs != null) {
     parsed.totalTimeMs = parsed.seqTimeMs;
+  }
+
+  // Recalculate speedup based on correct totalTimeMs
+  if (parsed.seqTimeMs != null && parsed.totalTimeMs != null && parsed.totalTimeMs > 0) {
+    parsed.speedup = parsed.seqTimeMs / parsed.totalTimeMs;
+    if (parsed.workers != null && parsed.workers > 0) {
+      parsed.efficiency = parsed.speedup / parsed.workers;
+    }
   }
 
   const summary = {
